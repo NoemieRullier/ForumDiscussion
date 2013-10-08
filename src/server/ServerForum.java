@@ -18,10 +18,13 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum{
 		addSubjectDiscussion("Radio");
 	}
 	
-	public List<ISubjectDiscussion> getListSubject() throws RemoteException {
-		return listSubject;
+	@Override
+	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException {
+		Remote
+		return ;
 	}
 	
+	@Override
 	public int nbSujets() throws RemoteException {
 		return listSubject.size(); 
 	}

@@ -14,7 +14,7 @@ public interface IServerForum extends Remote{
 	
 	public boolean addSubjectDiscussion(String title) throws RemoteException; 
 	
-	public List<ISubjectDiscussion> getListSubject() throws RemoteException; 
+	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException; 
 	
 	public int nbSujets() throws RemoteException; 
 	
