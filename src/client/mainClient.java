@@ -14,12 +14,16 @@ public class mainClient {
 
 	public static void main(String[] args) {
 		try {
-			String serverAddress = "//" + InetAddress.getLocalHost().getHostAddress() + "/ServerForum";
+			//String serverAddress = "//" + InetAddress.getLocalHost().getHostAddress() + "/ServerForum";
+			String serverAddress = "//192.168.137.1:1099/ServerForum";
 			IServerForum chatServer = (IServerForum) Naming.lookup(serverAddress);
-			listSubject = chatServer.getListSubject();
-			MainWindow window = new MainWindow(listSubject);
+			System.out.println("Connexion OK");
+			System.out.println(chatServer.nbSubject());
+			//listSubject = chatServer.getListSubject();
+			//MainWindow window = new MainWindow(listSubject);
 		}
 		catch (Exception e){
+			e.printStackTrace();
 			System.out.println("Ca marche pas");
 		}
 	}
