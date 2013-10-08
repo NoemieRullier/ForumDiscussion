@@ -18,7 +18,7 @@ public class mainClient {
 			String serverAddress = "//192.168.137.1:1099/ServerForum";
 			IServerForum chatServer = (IServerForum) Naming.lookup(serverAddress);
 			System.out.println("Connexion OK");
-			System.out.println(chatServer.nbSubject());
+			System.out.println(chatServer.nbSujets());
 			//listSubject = chatServer.getListSubject();
 			//MainWindow window = new MainWindow(listSubject);
 		}
