@@ -13,7 +13,7 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum{
 
 	public ServerForum() throws RemoteException {
 		listSubject = new LinkedList<ISubjectDiscussion>();
-		addSubjectDiscussion("Cinéma");
+		addSubjectDiscussion("Cinema");
 		addSubjectDiscussion("Gymnastique");
 		addSubjectDiscussion("Radio");
 	}
@@ -21,12 +21,16 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum{
 	public List<ISubjectDiscussion> getListSubject() throws RemoteException {
 		return listSubject;
 	}
+	
+	public int nbSujets() throws RemoteException {
+		return listSubject.size(); 
+	}
 
 	@Override
-	public ISubjectDiscussion getSubject(String title) throws RemoteException {
+	public ISubjectDiscussion getSubject( String title ) throws RemoteException {
 		ISubjectDiscussion subject = null;
-		for (ISubjectDiscussion s : listSubject){
-			if (s.getTitle().equals(title)){
+		for ( ISubjectDiscussion s : listSubject ){
+			if ( s.getTitle().equals( title ) ){
 				subject = s;
 			}
 		}
@@ -42,7 +46,7 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum{
 			}
 		}
 		if ( bFree ) {
-			SubjectDiscussion subj = new SubjectDiscussion(title);
+			ISubjectDiscussion subj = new SubjectDiscussion(title);
 			this.listSubject.add(subj);
 		}
 		return bFree;

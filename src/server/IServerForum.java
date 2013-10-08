@@ -16,4 +16,6 @@ public interface IServerForum extends Remote{
 	
 	public List<ISubjectDiscussion> getListSubject() throws RemoteException; 
 	
+	public int nbSujets() throws RemoteException; 
+	
 }
