@@ -23,6 +23,8 @@ public interface ISubjectDiscussion extends Remote {
 	 * Broadcast the message msg to all DisplayClient register
 	 */
 	public void broadcast(String msg) throws RemoteException;
+
+	public String getTitle() throws RemoteException;
 	
 	
 }

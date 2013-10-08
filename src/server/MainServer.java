@@ -5,13 +5,15 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
 public class MainServer {
+	
+	public static boolean debug = false;
 
 	public static void main(String[] args) {
 		try {
 			LocateRegistry.createRegistry(1099);
 		}
 		catch (Exception e){
-			System.out.println("Registry");
+			System.out.println("Port already use");
 		}
 		try {
 			ServerForum server = new ServerForum();
@@ -19,8 +21,10 @@ public class MainServer {
 			Naming.rebind(serverAddress, server);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("error");
+			if (debug) {
+				e.printStackTrace();
+			}
+			System.out.println("Error");
 		}
 	}
 
