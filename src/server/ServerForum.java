@@ -1,30 +1,32 @@
 package server;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-import server.remote.RemoteList;
+public class ServerForum extends UnicastRemoteObject implements IServerForum, Serializable{
 
-public class ServerForum extends UnicastRemoteObject implements IServerForum{
-
-	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6843509051426878264L;
 	private List<ISubjectDiscussion> listSubject;
 
 	public ServerForum() throws RemoteException {
-		listSubject = new LinkedList<ISubjectDiscussion>();
+		listSubject = new ArrayList<ISubjectDiscussion>();
 		addSubjectDiscussion("Cinema");
 		addSubjectDiscussion("Gymnastique");
 		addSubjectDiscussion("Radio");
 	}
 	
 	@Override
-	public RemoteList<ISubjectDiscussion> remoteListSubject() throws RemoteException {
-		RemoteList< ISubjectDiscussion > rl = new RemoteList< ISubjectDiscussion >(); 
-		rl.copie( listSubject ); 
-		return rl; 
+	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException {
+		/*IRemoteList<ISubjectDiscussion> rl = new RemoteList< ISubjectDiscussion >(); 
+		rl.copie( listSubject ); */
+		return listSubject; 
 	}
 	
 	@Override

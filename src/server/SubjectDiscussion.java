@@ -1,11 +1,16 @@
 package server;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
 
 import client.*;
 
-public class SubjectDiscussion implements ISubjectDiscussion {
+public class SubjectDiscussion implements ISubjectDiscussion{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2403065407962436933L;
 	private List<IDisplayClient> listClient;
 	private String title;
 	

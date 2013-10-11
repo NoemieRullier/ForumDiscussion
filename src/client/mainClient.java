@@ -6,7 +6,6 @@ import java.util.List;
 
 import server.IServerForum;
 import server.ISubjectDiscussion;
-import server.SubjectDiscussion;
 
 public class mainClient {
 	
@@ -14,12 +13,11 @@ public class mainClient {
 
 	public static void main(String[] args) {
 		try {
-			//String serverAddress = "//" + InetAddress.getLocalHost().getHostAddress() + "/ServerForum";
-			String serverAddress = "//192.168.137.1:1099/ServerForum";
+			String serverAddress = "//" + InetAddress.getLocalHost().getHostAddress() + ":1099/ServerForum";
+			//String serverAddress = "//192.168.137.1:1099/ServerForum";
 			IServerForum chatServer = (IServerForum) Naming.lookup(serverAddress);
 			System.out.println("Connexion OK");
-			System.out.println(chatServer.nbSujets());
-			//listSubject = chatServer.getListSubject();
+			listSubject = chatServer.remoteListSubject();
 			//MainWindow window = new MainWindow(listSubject);
 		}
 		catch (Exception e){
