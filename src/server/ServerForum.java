@@ -6,13 +6,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerForum extends UnicastRemoteObject implements IServerForum, Serializable{
+public class ServerForum extends UnicastRemoteObject implements IServerForum {
 
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6843509051426878264L;
+	
 	private List<ISubjectDiscussion> listSubject;
 
 	public ServerForum() throws RemoteException {
@@ -23,10 +24,8 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum, Se
 	}
 	
 	@Override
-	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException {
-		/*IRemoteList<ISubjectDiscussion> rl = new RemoteList< ISubjectDiscussion >(); 
-		rl.copie( listSubject ); */
-		return listSubject; 
+	public ISubjectDiscussion sendSubject( int pos ) throws RemoteException {
+		return listSubject.get( pos ); 
 	}
 	
 	@Override

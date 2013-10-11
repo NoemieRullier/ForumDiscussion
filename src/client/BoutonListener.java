@@ -2,44 +2,69 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 
-public class BoutonListener extends Thread implements ActionListener {
+import server.IServerForum;
+import server.ISubjectDiscussion;
+
+// extends Thread
+public class BoutonListener implements ActionListener {
 
 	//private static MonitorExchanger<String> monitor = new MonitorExchanger();
 	private JButton button;
+	private ISubjectDiscussion subject;
+	private IDisplayClient client; 
 	
-	public BoutonListener(JButton b){
-		button = b;
+	public BoutonListener( JButton b, ISubjectDiscussion s ){
+		this.button = b;
+		this.subject = s; 
 	}
-	
-	// Lancée dès la création du Listener à l'aide de la méthode start
-	public void run(){
-		while(true){
-			attendre();
-			button.setEnabled(false);
-		//	button.setText(monitor.echange(button.getText()));;
-			button.setEnabled(true);
-		}
-	}
-	
+
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		reprendre();
-	}
-	
-	public synchronized void attendre(){
+	public void actionPerformed( ActionEvent e ) {
+		System.out.println( "Appui sur " + this.button.getText() ); 
+		this.client = new DisplayClient( this.button.getText(), subject ); 
+		System.out.println( 
+			"demande d'inscription de " + this.client + 
+			" au sujet " + this.subject + "... "
+		); 
 		try {
-			wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			this.subject.registration( client ); 
+			button.setEnabled( false ); 
+		} catch( RemoteException e1 ) {
+			System.out.println( "Erreur : impossible d'inscrire le client au sujet" ); 
+//			e1.printStackTrace();
+		} 
 	}
 	
-	public synchronized void reprendre(){
-		notify();
-	}
-	
+//	// Lancee des la creation du Listener a l'aide de la methode start
+//	public void run(){
+//		while(true){
+//			attendre();
+//			button.setEnabled(false);
+//		//	button.setText(monitor.echange(button.getText()));;
+//			button.setEnabled(true);
+//		}
+//	}
+//	
+//	@Override
+//	public void actionPerformed(ActionEvent arg0) {
+//		reprendre();
+//	}
+//	
+//	public synchronized void attendre(){
+//		try {
+//			wait();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	public synchronized void reprendre(){
+//		notify();
+//	}
+//	
 }

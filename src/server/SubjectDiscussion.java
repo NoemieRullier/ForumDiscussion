@@ -1,11 +1,13 @@
 package server;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
 import client.*;
 
-public class SubjectDiscussion implements ISubjectDiscussion{
+public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDiscussion {
 	
 	/**
 	 * 
@@ -15,8 +17,9 @@ public class SubjectDiscussion implements ISubjectDiscussion{
 	private String title;
 	
 
-	public SubjectDiscussion(String title) {
+	public SubjectDiscussion(String title) throws RemoteException {
 		this.title = title;
+		listClient = new ArrayList<IDisplayClient>(); 
 	}
 	
 	public List<IDisplayClient> getListClient() {
@@ -58,6 +61,7 @@ public class SubjectDiscussion implements ISubjectDiscussion{
 		}
 		if ( bFree ) {
 			this.listClient.remove(c);
+			System.out.println("removed ");
 		}
 	}
 

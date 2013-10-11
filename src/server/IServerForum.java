@@ -6,7 +6,7 @@ import java.util.List;
 
 import server.remote.IRemoteList;
 
-public interface IServerForum extends Remote{
+public interface IServerForum extends Remote {
 
 	/*
 	 * TODO A revoir comment on fait la doc (je me souviens plus) ^^
@@ -16,8 +16,10 @@ public interface IServerForum extends Remote{
 	
 	public boolean addSubjectDiscussion(String title) throws RemoteException; 
 	
-	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException; 
+//	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException; 
 	
-	public int nbSujets() throws RemoteException; 
+	public int nbSujets() throws RemoteException;
+
+	ISubjectDiscussion sendSubject( int pos ) throws RemoteException; 
 	
 }
