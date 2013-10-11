@@ -21,4 +21,10 @@ public class RemoteList<T> extends RemoteObject {
 	public int size() {
 		return this.l.size(); 
 	}
+	
+	public void copie( List< T > l ) {
+		for ( T elem : l  ) {
+			this.l.add( elem ); 
+		}
+	}
 }

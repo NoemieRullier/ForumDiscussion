@@ -2,7 +2,7 @@ package server;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
+import server.remote.RemoteList;
 
 public interface IServerForum extends Remote{
 
@@ -14,7 +14,7 @@ public interface IServerForum extends Remote{
 	
 	public boolean addSubjectDiscussion(String title) throws RemoteException; 
 	
-	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException; 
+	public RemoteList< ISubjectDiscussion > remoteListSubject() throws RemoteException; 
 	
 	public int nbSujets() throws RemoteException; 
 	

@@ -5,6 +5,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import server.remote.RemoteList;
+
 public class ServerForum extends UnicastRemoteObject implements IServerForum{
 
 	private static final long serialVersionUID = 1L;
@@ -19,9 +21,10 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum{
 	}
 	
 	@Override
-	public List<ISubjectDiscussion> remoteListSubject() throws RemoteException {
-		Remote
-		return ;
+	public RemoteList<ISubjectDiscussion> remoteListSubject() throws RemoteException {
+		RemoteList< ISubjectDiscussion > rl = new RemoteList< ISubjectDiscussion >(); 
+		rl.copie( listSubject ); 
+		return rl; 
 	}
 	
 	@Override
