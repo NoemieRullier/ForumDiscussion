@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import server.ISubjectDiscussion;
 
@@ -33,7 +32,8 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 	private JLabel labelTitle = new JLabel();
 	private JTextArea discussionArea = new JTextArea();
 	private JScrollPane discussionPane = new JScrollPane(discussionArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-	private JTextField newMessageArea = new JTextField();
+	private JTextArea newMessageArea = new JTextArea();
+	private JScrollPane newMessagePane = new JScrollPane(newMessageArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	ImageIcon icon = new ImageIcon("img/email_32.png");
 	private JButton sendButton = new JButton("Envoyer",icon);
 
@@ -74,7 +74,6 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 
 
 
-	// TODO: Redimensionner champ pour nouveau msg + mettre les multilignes
 	public DisplayClient(String title, ISubjectDiscussion subject){
 		this.subject = subject; 
 		this.labelTitle.setText(title);
@@ -95,7 +94,7 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 		/* Discussion Area */
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.gridheight = 1;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
@@ -103,18 +102,21 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = new Insets(5, 10, 5, 10);
 		discussionArea.setEditable(false);
+		discussionArea.setLineWrap(true);
 		panel.add(discussionPane,gbc);
 		/* New Message Area */
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
-		gbc.gridheight = 1; // One cell in height
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridheight = 1;
 		gbc.weightx = 0;
-		gbc.weighty = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weighty = 0.2;
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = new Insets(5, 10, 5, 10);
-		panel.add(newMessageArea,gbc);
+		newMessageArea.setLineWrap(true);
+		//newMessageArea.requestFocus();
+		panel.add(newMessagePane,gbc);
 		/* Send Button */
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -134,6 +136,7 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 		this.setResizable(true);
 		this.setContentPane(panel);
 		this.setVisible(true);
+		newMessageArea.requestFocus();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener( 
 				new SubjectWindowAdapter( this.subject, this )
@@ -141,7 +144,7 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 
 	}
 
-	// TODO Add sender : msg
+	// TODO Ajouter le nom de l'envoyeur puis ":" et son message
 	@Override
 	public void display(String msg) throws RemoteException {
 		discussionArea.setText(discussionArea.getText() + msg); 

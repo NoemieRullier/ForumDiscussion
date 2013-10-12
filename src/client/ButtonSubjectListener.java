@@ -10,14 +10,14 @@ import server.IServerForum;
 import server.ISubjectDiscussion;
 
 // extends Thread
-public class BoutonListener implements ActionListener {
+public class ButtonSubjectListener implements ActionListener {
 
 	//private static MonitorExchanger<String> monitor = new MonitorExchanger();
 	private JButton button;
 	private ISubjectDiscussion subject;
 	private IDisplayClient client; 
 	
-	public BoutonListener( JButton b, ISubjectDiscussion s ){
+	public ButtonSubjectListener( JButton b, ISubjectDiscussion s ){
 		this.button = b;
 		this.subject = s; 
 	}
