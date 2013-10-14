@@ -19,13 +19,14 @@ import javax.swing.JTextArea;
 import server.ISubjectDiscussion;
 
 
-public class DisplayClient extends JFrame implements IDisplayClient{
+public class DisplayClient extends JFrame implements IDisplayClient {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5527962306243213784L;
-
+	private static long nextInstanceID = 0; 
+	private long instanceID; 
 
 	private JPanel panel = new JPanel();
 	private GridBagConstraints gbc = new GridBagConstraints();
@@ -75,6 +76,9 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 
 
 	public DisplayClient(String title, ISubjectDiscussion subject){
+		
+		this.setInstanceID(); 
+		
 		this.subject = subject; 
 		this.labelTitle.setText(title);
 
@@ -132,7 +136,7 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 
 		this.setTitle("Sujet: "+title);
 		this.setSize(400, 600);
-		this.setLocationRelativeTo(null); // TODO: Centrer la fenêtre par rapport au parent par la suite
+		this.setLocationRelativeTo(null); // TODO: Centrer la fenÔøΩtre par rapport au parent par la suite
 		this.setResizable(true);
 		this.setContentPane(panel);
 		this.setVisible(true);
@@ -143,11 +147,23 @@ public class DisplayClient extends JFrame implements IDisplayClient{
 				);
 
 	}
+	
+	private void setInstanceID() {
+		this.instanceID = DisplayClient.nextInstanceID; 
+		DisplayClient.nextInstanceID++; 
+	}
+	public long getInstanceID() throws RemoteException {
+		return this.instanceID; 
+	}
 
 	// TODO Ajouter le nom de l'envoyeur puis ":" et son message
 	@Override
 	public void display(String msg) throws RemoteException {
 		discussionArea.setText(discussionArea.getText() + msg); 
 	}
-
+	
+	@Override
+	public boolean equals(IDisplayClient dc) throws RemoteException {
+		return ( this.instanceID == dc.getInstanceID() ); 
+	}
 }
