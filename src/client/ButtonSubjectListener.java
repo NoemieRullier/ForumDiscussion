@@ -12,6 +12,7 @@ import server.ISubjectDiscussion;
 // extends Thread
 public class ButtonSubjectListener implements ActionListener {
 
+	// Add comments 
 	//private static MonitorExchanger<String> monitor = new MonitorExchanger();
 	private JButton button;
 	private ISubjectDiscussion subject;
