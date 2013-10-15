@@ -1,0 +1,6 @@
+1) Gérer la connexion des clients avec des pseudo valides -> Voir pour faire une petite Fenêtre dans laquelle on rentre le pseudo tant que celui-ci est pas valide on a cette fenêtre => Par contre faire attention car entre le temps ou on vérifie que le pseudo est dispo et le temps ou l'utilisateur valide
+2) Ajouter la possibilité aux clients de créer des sujet comment faire pour que les autres clients soient notifié et que le sujet apparaissent
+3) Possibilité de supprimer un sujet ? Que fait-on de ceux connecté actuellement
+4) Voir pour un historique des message -> Lors de la connexion d'un nouveaux membre on lui affiche les combien derniers ? Ou on lui demande s'il veut charger l'historique ?
+
+5) Gérer toutes les exceptions et qu'est-ce que l'on fait on arrête la discussion ...
