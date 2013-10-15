@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.*;
+import client.model.IClient;
 
 public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDiscussion {
 	
@@ -13,20 +14,20 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 	 * 
 	 */
 	private static final long serialVersionUID = 2403065407962436933L;
-	private List<IDisplayClient> listClient;
+	private List<IClient> listClient;
 	private String title;
 	
 
 	public SubjectDiscussion(String title) throws RemoteException {
 		this.title = title;
-		listClient = new ArrayList<IDisplayClient>(); 
+		listClient = new ArrayList<IClient>(); 
 	}
 	
-	public List<IDisplayClient> getListClient() {
+	public List<IClient> getListClient() {
 		return listClient;
 	}
 
-	public void setListClient(List<IDisplayClient> listClient) {
+	public void setListClient(List<IClient> listClient) {
 		this.listClient = listClient;
 	}
 
@@ -39,9 +40,9 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 	}
 
 	@Override
-	public void registration(IDisplayClient c) throws RemoteException {
+	public boolean registration( IClient c) throws RemoteException {
 		boolean bFree = true; 
-		for (IDisplayClient dc : listClient){
+		for (IClient dc : listClient){
 			if (dc.equals(c)){
 				bFree = false;
 			}
@@ -49,12 +50,13 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 		if ( bFree ) {
 			this.listClient.add(c);
 		}
+		return bFree; 
 	}
 
 	@Override
-	public void desinscription(IDisplayClient c) throws RemoteException {
+	public void desinscription(IClient c) throws RemoteException {
 		boolean bFree = false; 
-		for (IDisplayClient dc : listClient){
+		for (IClient dc : listClient){
 			if (dc.equals(c)){
 				bFree = true;
 			}
@@ -67,8 +69,8 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 
 	@Override
 	public void broadcast(String msg) throws RemoteException {
-		for (IDisplayClient dc : listClient){
-			dc.display(msg);
+		for (IClient dc : listClient){
+			dc.displayMessage( this, msg);
 		}
 	}
 

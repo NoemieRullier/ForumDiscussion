@@ -3,20 +3,20 @@ package server;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import client.IDisplayClient;
+import client.model.IClient;
 
 public interface ISubjectDiscussion extends Remote {
 
 	/*
 	 * Register DisplayClient to this subject discussion
 	 */
-	public void registration (IDisplayClient c) throws RemoteException;
+	public boolean registration (IClient c) throws RemoteException;
 	
 	/*
 	 * ??? DisplayClient to this  
 	 */
 	// TODO Change name in english this subject discussion
-	public void desinscription (IDisplayClient c) throws RemoteException;
+	public void desinscription (IClient c) throws RemoteException;
 	
 	
 	/*

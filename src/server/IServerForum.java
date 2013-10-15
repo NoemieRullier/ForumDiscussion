@@ -4,8 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import server.remote.IRemoteList;
-
 public interface IServerForum extends Remote {
 
 	/*
