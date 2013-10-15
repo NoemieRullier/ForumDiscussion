@@ -13,6 +13,9 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	 */
 	private static final long serialVersionUID = -6843509051426878264L;
 	
+	
+	// TODO: ajouter la gestion de pseudo
+	
 	private List<ISubjectDiscussion> listSubject;
 
 	public ServerForum() throws RemoteException {

@@ -40,10 +40,10 @@ public class MainWindowClient extends JFrame {
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
 	private JPanel panel = new JPanel(); 
 
-	public MainWindowClient( List<ISubjectDiscussion> listSubject) throws RemoteException {
+	public MainWindowClient( List<ISubjectDiscussion> listSubject, String pseudo) throws RemoteException {
 		
 		this.controller = new ClientController(this);
-		this.client = new Client(controller, "Nomyx");
+		this.client = new Client(controller, pseudo);
 		
 		for ( ISubjectDiscussion s : listSubject ){
 			buttonSubject = new JButton( s.getTitle() );

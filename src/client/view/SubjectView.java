@@ -45,6 +45,7 @@ public class SubjectView extends JFrame {
 	private IClient client;
 	private ISubjectDiscussion subject; 
 	private String title; 
+	private String pseudo; 
 
 	public SubjectView( ISubjectDiscussion subject, IClientController controller, IClient client ){
 		this.subject = subject; 
@@ -52,6 +53,7 @@ public class SubjectView extends JFrame {
 		
 		try {
 			this.title = subject.getTitle();
+			this.pseudo = client.getLogin();
 		} catch( RemoteException e ) {
 			this.title = ""; 
 		} 
@@ -111,7 +113,7 @@ public class SubjectView extends JFrame {
 		sendButton.addActionListener( new ButtonSendListener() );
 		panel.add(sendButton,gbc);
 
-		this.setTitle( "Sujet: " + title );
+		this.setTitle( "Sujet: " + title + " - " + pseudo);
 		this.setSize(400, 600);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
@@ -123,7 +125,7 @@ public class SubjectView extends JFrame {
 	}
 
 	public void displayMessage( String msg ) throws RemoteException {
-		discussionArea.append( client.getLogin() + " : " + msg + "\n" ); 
+		discussionArea.append( msg ); 
 	}
 
 	
@@ -132,8 +134,9 @@ public class SubjectView extends JFrame {
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			try {
-				controller.pleaseSendMessage( subject, newMessageArea.getText() );
+				controller.pleaseSendMessage( subject, pseudo + " : " + newMessageArea.getText() + "\n");
 			} catch( RemoteException e1 ) {
+				System.out.println("Impossible to send a message");
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} 
@@ -150,7 +153,6 @@ public class SubjectView extends JFrame {
 				try {
 					controller.pleaseUnsubscribe(subject, client);
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					// reactiver button
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

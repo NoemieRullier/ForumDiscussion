@@ -55,24 +55,23 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 	public boolean unsubscribe(IClient c) throws RemoteException {
 		boolean bFree = false; 
 		for (IClient dc : listClient){
-			System.out.println("unsubscribe list" + dc.getLogin() + " ? " + c.getLogin() );
 			if (dc.equals(c)){
 				bFree = true;
 			}
 		}
 		if ( bFree ) {
 			this.listClient.remove(c);
-			System.out.println("removed ");
+			System.out.println(c.getLogin() + " was unsubscribe ");
 		}
 		return bFree;
 	}
 
 	@Override
 	public void broadcast(String msg) throws RemoteException {
-		System.out.println( "clients ?" );
+		System.out.println( "List of clients subscribe:" );
 		for (IClient dc : listClient){
 			dc.displayMessage( this, msg);
-			System.out.println( dc.getLogin() + msg );
+			System.out.println( dc.getLogin() + " : " + msg );
 		}
 	}
 
