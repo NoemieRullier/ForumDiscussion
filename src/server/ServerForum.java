@@ -13,13 +13,12 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	 */
 	private static final long serialVersionUID = -6843509051426878264L;
 	
-	
-	// TODO: ajouter la gestion de pseudo
-	
 	private List<ISubjectDiscussion> listSubject;
+	private List<String> pseudosUsed;
 
 	public ServerForum() throws RemoteException {
 		listSubject = new ArrayList<ISubjectDiscussion>();
+		pseudosUsed = new ArrayList<String>();
 		addSubjectDiscussion("Cinema");
 		addSubjectDiscussion("Gymnastique");
 		addSubjectDiscussion("Radio");
