@@ -54,9 +54,10 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 	}
 
 	@Override
-	public void desinscription(IClient c) throws RemoteException {
+	public boolean unsubscribe(IClient c) throws RemoteException {
 		boolean bFree = false; 
 		for (IClient dc : listClient){
+			System.out.println("unsubscribe list" + dc.getLogin() + " ? " + c.getLogin() );
 			if (dc.equals(c)){
 				bFree = true;
 			}
@@ -65,6 +66,7 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 			this.listClient.remove(c);
 			System.out.println("removed ");
 		}
+		return bFree;
 	}
 
 	@Override

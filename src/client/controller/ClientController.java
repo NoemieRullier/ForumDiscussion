@@ -31,7 +31,19 @@ public class ClientController implements IClientController {
 	@Override
 	public void pleaseSubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException { 
 		if ( client.pleaseSubscribe( subject ) ) {
-			mapsv.put( subject, new SubjectView( subject, this ) ); 
+			mapsv.put( subject, new SubjectView( subject, this, client ) ); 
+		}
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see client.controller.IClientController#pleaseSubscribe(server.ISubjectDiscussion, client.model.IClient)
+	 */
+	@Override
+	public void pleaseUnsubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException { 
+		if ( client.pleaseUnsubscribe(subject)) {
+			System.out.println("Server return true so remove from map");
+			mapsv.remove( subject ); 
 		}
 	}
 	
@@ -41,7 +53,6 @@ public class ClientController implements IClientController {
 	@Override
 	public void pleaseSendMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
 		subject.broadcast( msg ); 
-		System.out.println( "Controller broadcast : " + msg ); 
 	}
 	
 	/* (non-Javadoc)

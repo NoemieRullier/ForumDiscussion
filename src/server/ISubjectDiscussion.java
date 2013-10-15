@@ -12,12 +12,6 @@ public interface ISubjectDiscussion extends Remote {
 	 */
 	public boolean registration (IClient c) throws RemoteException;
 	
-	/*
-	 * ??? DisplayClient to this  
-	 */
-	// TODO Change name in english this subject discussion
-	public void desinscription (IClient c) throws RemoteException;
-	
 	
 	/*
 	 * Broadcast the message msg to all DisplayClient register
@@ -25,6 +19,8 @@ public interface ISubjectDiscussion extends Remote {
 	public void broadcast(String msg) throws RemoteException;
 
 	public String getTitle() throws RemoteException;
+
+	public boolean unsubscribe(IClient c) throws RemoteException;
 	
 	
 }

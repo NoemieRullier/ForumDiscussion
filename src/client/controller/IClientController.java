@@ -16,11 +16,14 @@ public interface IClientController extends Remote {
 	public void pleaseSendMessage( 
 		ISubjectDiscussion subject, 
 		String msg 
-	) throws RemoteException; 
+	) throws RemoteException;
 	
 	public void displayMessage( 
 		ISubjectDiscussion subject, 
 		String msg 
-	) throws RemoteException; 
-	
+	) throws RemoteException;
+
+	void pleaseUnsubscribe(ISubjectDiscussion subject, IClient client)
+			throws RemoteException;
+
 }
