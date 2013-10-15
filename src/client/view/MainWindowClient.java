@@ -51,6 +51,8 @@ public class MainWindowClient extends JFrame {
 			panel.add(buttonSubject);
 			listButtonSubject.add(buttonSubject);
 		}
+		
+		this.setTitle( "Bienvenue " + pseudo);
 		this.setContentPane(panel);
 		this.setVisible(true);
 		this.setSize(600, 70);
