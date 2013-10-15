@@ -37,12 +37,8 @@ public class MainClient {
 				listSubject.add( sujet ); 
 			}
 			System.out.println( "Liste locale : nbElem " + listSubject.size() );
-			
-			controller = new ClientController(); 
-			client = new Client( controller, "Nomyx" ); 
-			
-			
-			MainWindowClient window = new MainWindowClient(listSubject, controller, client);
+			 
+			MainWindowClient window = new MainWindowClient(listSubject);
 		}
 		catch (Exception e){
 			e.printStackTrace();

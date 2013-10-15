@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import client.model.IClient;
+import client.view.MainWindowClient;
 import client.view.SubjectView;
 import server.ISubjectDiscussion;
 
@@ -19,9 +20,14 @@ import server.ISubjectDiscussion;
 public class ClientController implements IClientController {
 	
 	
-	private Map< ISubjectDiscussion, SubjectView > mapsv; 
+	private Map< ISubjectDiscussion, SubjectView > mapsv;
+	private MainWindowClient mainWindowClient;/*
+	private IClient client;*/
 	
-	public ClientController() {
+	
+	public ClientController(MainWindowClient mainWindowClient/*, IClient client*/) {
+		this.mainWindowClient = mainWindowClient;/*
+		this.client = client;*/
 		mapsv = new HashMap< ISubjectDiscussion, SubjectView >(); 
 	}
 	
@@ -42,9 +48,9 @@ public class ClientController implements IClientController {
 	@Override
 	public void pleaseUnsubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException { 
 		if ( client.pleaseUnsubscribe(subject)) {
-			System.out.println("Server return true so remove from map");
 			mapsv.remove( subject ); 
 		}
+		mainWindowClient.activeButton(subject.getTitle());
 	}
 	
 	/* (non-Javadoc)
@@ -59,7 +65,7 @@ public class ClientController implements IClientController {
 	 * @see client.controller.IClientController#displayMessage(server.ISubjectDiscussion, java.lang.String)
 	 */
 	@Override
-	public void displayMessage( ISubjectDiscussion subject, String msg ) {
+	public void displayMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
 		mapsv.get( subject ).displayMessage( msg ); 
 	}
 	

@@ -31,13 +31,13 @@ public class ButtonSubjectListener implements ActionListener {
 			"demande d'inscription de " + this.client + 
 			" au sujet " + this.subject + "... "
 		); 
-		try {
-			this.subject.registration( client ); 
+		/*try {
+			//this.subject.registration( client ); 
 			button.setEnabled( false ); 
 		} catch( RemoteException e1 ) {
 			System.out.println( "Erreur : impossible d'inscrire le client au sujet" ); 
 //			e1.printStackTrace();
-		} 
+		} */
 	}
 	
 //	// Lancee des la creation du Listener a l'aide de la methode start

@@ -1,11 +1,9 @@
 package server;
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.*;
 import client.model.IClient;
 
 public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDiscussion {
@@ -74,7 +72,7 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 		System.out.println( "clients ?" );
 		for (IClient dc : listClient){
 			dc.displayMessage( this, msg);
-			System.out.println( "client send : " + msg );
+			System.out.println( dc.getLogin() + msg );
 		}
 	}
 

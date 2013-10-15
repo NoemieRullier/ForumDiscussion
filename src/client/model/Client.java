@@ -6,7 +6,6 @@ package client.model;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import client.controller.ClientController;
 import client.controller.IClientController;
 import server.ISubjectDiscussion;
 
@@ -17,6 +16,11 @@ import server.ISubjectDiscussion;
  */
 public class Client extends UnicastRemoteObject implements IClient {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4449348011980703942L;
+	
 	private String login;
 	private IClientController controller; 
 	
@@ -26,17 +30,14 @@ public class Client extends UnicastRemoteObject implements IClient {
 	}
 	
 	
-	
 	public String getLogin() {
 		return login;
 	}
 
 
-
 	public void setLogin(String login) {
 		this.login = login;
 	}
-
 
 
 	/* (non-Javadoc)

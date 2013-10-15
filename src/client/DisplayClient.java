@@ -62,7 +62,7 @@ public class DisplayClient extends JFrame implements IDisplayClient {
 				try {
 					System.out.println( "recuperer sujet " + this.sujet.getTitle() );
 					// desinscrire du sujet 
-					this.sujet.desinscription( client );
+					//this.sujet.desinscription( client );
 				} catch( RemoteException e1 ) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
