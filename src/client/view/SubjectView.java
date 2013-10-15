@@ -134,7 +134,7 @@ public class SubjectView extends JFrame {
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			try {
-				controller.pleaseSendMessage( subject, pseudo + " : " + newMessageArea.getText() + "\n");
+				controller.pleaseSendMessage( subject, pseudo + " : " + newMessageArea.getText() + "\n", client);
 			} catch( RemoteException e1 ) {
 				System.out.println("Impossible to send a message");
 				// TODO Auto-generated catch block

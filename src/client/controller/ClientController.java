@@ -57,8 +57,8 @@ public class ClientController implements IClientController {
 	 * @see client.controller.IClientController#pleaseSendMessage(server.ISubjectDiscussion, java.lang.String)
 	 */
 	@Override
-	public void pleaseSendMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
-		subject.broadcast( msg ); 
+	public void pleaseSendMessage( ISubjectDiscussion subject, String msg, IClient client ) throws RemoteException {
+		client.pleaseSendMessage(subject, msg);
 	}
 	
 	/* (non-Javadoc)

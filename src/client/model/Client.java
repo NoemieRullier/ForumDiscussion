@@ -61,7 +61,7 @@ public class Client extends UnicastRemoteObject implements IClient {
 	 */
 	@Override
 	public void pleaseSendMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
-		// subject.broadcast(msg) ????
+		 subject.broadcast(msg);
 	}
 	
 	/* (non-Javadoc)
