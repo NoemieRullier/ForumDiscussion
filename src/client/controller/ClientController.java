@@ -41,6 +41,7 @@ public class ClientController implements IClientController {
 	@Override
 	public void pleaseSendMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
 		subject.broadcast( msg ); 
+		System.out.println( "Controller broadcast : " + msg ); 
 	}
 	
 	/* (non-Javadoc)

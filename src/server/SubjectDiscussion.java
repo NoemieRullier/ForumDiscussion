@@ -69,8 +69,10 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 
 	@Override
 	public void broadcast(String msg) throws RemoteException {
+		System.out.println( "clients ?" );
 		for (IClient dc : listClient){
 			dc.displayMessage( this, msg);
+			System.out.println( "client send : " + msg );
 		}
 	}
 

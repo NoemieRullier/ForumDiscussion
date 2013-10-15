@@ -51,7 +51,7 @@ public class Client extends UnicastRemoteObject implements IClient {
 	 */
 	@Override
 	public void displayMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
-		
+		controller.displayMessage( subject, msg ); 
 	}
 	
 }

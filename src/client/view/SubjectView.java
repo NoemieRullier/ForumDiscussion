@@ -125,7 +125,7 @@ public class SubjectView extends JFrame {
 	}
 	
 	public void displayMessage( String msg ) {
-		discussionArea.append( msg ); 
+		discussionArea.append( "login : " + msg + "\n" ); 
 	}
 	
 	public class ButtonSendListener implements ActionListener {
