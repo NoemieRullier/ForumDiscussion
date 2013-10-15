@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,7 +39,8 @@ public class MainWindowClient extends JFrame {
 	
 	private JButton buttonSubject;
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
-	private JPanel panel = new JPanel(); 
+	private JPanel panel = new JPanel();
+	private ImageIcon iconWindow = new ImageIcon("img/speech-bubble_32.png");
 
 	public MainWindowClient( List<ISubjectDiscussion> listSubject, String pseudo) throws RemoteException {
 		
@@ -54,6 +56,7 @@ public class MainWindowClient extends JFrame {
 		
 		this.setTitle( "Bienvenue " + pseudo);
 		this.setContentPane(panel);
+		this.setIconImage(iconWindow.getImage());
 		this.setVisible(true);
 		this.setSize(600, 70);
 	}

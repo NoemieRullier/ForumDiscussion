@@ -1,8 +1,5 @@
 import java.rmi.RemoteException;
 
-import server.ISubjectDiscussion;
-import server.SubjectDiscussion;
-import client.DisplayClient;
 import client.view.LoginView;
 
 

@@ -20,7 +20,7 @@ public class MainServer {
 //			String serverAddress = "//192.168.137.1:1099/ServerForum"; 
 			String serverAddress = "//"+ InetAddress.getLocalHost().getHostAddress() +":1099/ServerForum";
 			Naming.rebind(serverAddress, server);
-			System.out.println("ok !");
+			System.out.println("Server start !");
 		}
 		catch (Exception e) {
 			if (debug) {
