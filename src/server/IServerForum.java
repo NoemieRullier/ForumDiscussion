@@ -15,6 +15,10 @@ public interface IServerForum extends Remote {
 	
 	public int nbSujets() throws RemoteException;
 
-	public ISubjectDiscussion sendSubject( int pos ) throws RemoteException; 
+	public ISubjectDiscussion sendSubject( int pos ) throws RemoteException;
+	
+	public boolean pseudoAvailable(String pseudo) throws RemoteException;
+
+	public void removeLogin(String login) throws RemoteException;
 	
 }

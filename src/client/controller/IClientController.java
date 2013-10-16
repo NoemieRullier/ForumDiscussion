@@ -15,6 +15,8 @@ public interface IClientController{
 
 	public void pleaseSendMessage(ISubjectDiscussion subject, String msg, IClient client) throws RemoteException;
 	
-	public boolean verifyAvailableLogin(String login);
+	public boolean verifyAvailableLogin(String login) throws RemoteException;
+
+	public void pleaseRemoveLogin(String login) throws RemoteException;
 
 }

@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -116,9 +117,15 @@ public class LoginView extends JDialog {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Regarder si pseudo dispo, si oui on l'ajoute à la liste et on ferme la modale, si non on revient sur cette fenêtre et on affiche un message pour d
-			// dire que c'est pas OK
-			if (parent.getController().verifyAvailableLogin(pseudoField.getText())){
+			boolean dispo = false;
+			try {
+				dispo = parent.getController().verifyAvailableLogin(pseudoField.getText()); 
+				
+			} catch (RemoteException e1) {
+				System.out.println("Impossible to verify");
+				e1.printStackTrace();
+			}
+			if (dispo){
 				parent.setPseudo(pseudoField.getText());
 				source.dispose();
 			}

@@ -70,10 +70,13 @@ public class ClientController implements IClientController {
 	}
 
 	@Override
-	public boolean verifyAvailableLogin(String login) {
-		return true;
-		// Faire appel à notre server pour vérifer dispo
-		//chatServer.
+	public boolean verifyAvailableLogin(String login) throws RemoteException {
+		return chatServer.pseudoAvailable(login);
+	}
+
+	@Override
+	public void pleaseRemoveLogin(String login) throws RemoteException {
+		chatServer.removeLogin(login);
 	}
 	
 }

@@ -5,6 +5,8 @@ package client.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import server.IServerForum;
@@ -69,6 +72,7 @@ public class MainWindowClient extends JFrame {
 		this.setIconImage(iconWindow.getImage());
 		this.setVisible(true);
 		this.setSize(600, 70);
+		this.addWindowListener( new MainWindowAdapter() );
 	}
 	
 	
@@ -120,6 +124,23 @@ public class MainWindowClient extends JFrame {
 			} catch( RemoteException e1 ) {
 				System.out.println( "le main window client marche paaaaas T_T" );
 				e1.printStackTrace();
+			} 
+		}
+	}
+	
+	private class MainWindowAdapter extends WindowAdapter {
+
+		public void windowClosing(WindowEvent e) {
+			JFrame frame = (JFrame)e.getSource();
+			int result = JOptionPane.showConfirmDialog(frame, "Are you sure?", "Quit application", JOptionPane.YES_NO_OPTION );
+			if (result == JOptionPane.YES_OPTION) {
+				try {
+					controller.pleaseRemoveLogin(client.getLogin());
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} 
 		}
 	}
