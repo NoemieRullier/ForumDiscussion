@@ -14,5 +14,7 @@ public interface IClientController{
 	public void pleaseUnsubscribe(ISubjectDiscussion subject, IClient client) throws RemoteException;
 
 	public void pleaseSendMessage(ISubjectDiscussion subject, String msg, IClient client) throws RemoteException;
+	
+	public boolean verifyAvailableLogin(String login);
 
 }

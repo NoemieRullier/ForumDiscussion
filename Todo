@@ -1,5 +1,7 @@
 1) GŽrer la connexion des clients avec des pseudo valides -> Voir pour faire une petite Fentre dans laquelle on rentre le pseudo tant que celui-ci est pas valide on a cette fentre => Par contre faire attention car entre le temps ou on vŽrifie que le pseudo est dispo et le temps ou l'utilisateur valide
+	|-> Synchronized pour l'accs ˆ la liste des clients.
 2) Ajouter la possibilitŽ aux clients de crŽer des sujet comment faire pour que les autres clients soient notifiŽ et que le sujet apparaissent
+	|-> Synchronized pour l'accs ˆ la liste des sujet ?
 3) PossibilitŽ de supprimer un sujet ? Que fait-on de ceux connectŽ actuellement
 4) Voir pour un historique des message -> Lors de la connexion d'un nouveaux membre on lui affiche les combien derniers ? Ou on lui demande s'il veut charger l'historique ?
 

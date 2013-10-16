@@ -10,6 +10,7 @@ import java.util.Map;
 import client.model.IClient;
 import client.view.MainWindowClient;
 import client.view.SubjectView;
+import server.IServerForum;
 import server.ISubjectDiscussion;
 
 
@@ -19,15 +20,13 @@ import server.ISubjectDiscussion;
  */
 public class ClientController implements IClientController {
 	
-	
+	private IServerForum chatServer;
 	private Map< ISubjectDiscussion, SubjectView > mapsv;
-	private MainWindowClient mainWindowClient;/*
-	private IClient client;*/
+	private MainWindowClient mainWindowClient;
 	
-	
-	public ClientController(MainWindowClient mainWindowClient/*, IClient client*/) {
-		this.mainWindowClient = mainWindowClient;/*
-		this.client = client;*/
+	public ClientController(MainWindowClient mainWindowClient, IServerForum chatServer) {
+		this.chatServer = chatServer;
+		this.mainWindowClient = mainWindowClient;
 		mapsv = new HashMap< ISubjectDiscussion, SubjectView >(); 
 	}
 	
@@ -35,7 +34,8 @@ public class ClientController implements IClientController {
 	 * @see client.controller.IClientController#pleaseSubscribe(server.ISubjectDiscussion, client.model.IClient)
 	 */
 	@Override
-	public void pleaseSubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException { 
+	public void pleaseSubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException {
+		// TODO Add JProgress bar en attendant que connexion soit OK ?
 		if ( client.pleaseSubscribe( subject ) ) {
 			mapsv.put( subject, new SubjectView( subject, this, client ) ); 
 		}
@@ -67,6 +67,13 @@ public class ClientController implements IClientController {
 	@Override
 	public void displayMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
 		mapsv.get( subject ).displayMessage( msg ); 
+	}
+
+	@Override
+	public boolean verifyAvailableLogin(String login) {
+		return true;
+		// Faire appel à notre server pour vérifer dispo
+		//chatServer.
 	}
 	
 }

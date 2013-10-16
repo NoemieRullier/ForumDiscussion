@@ -148,7 +148,7 @@ public class SubjectView extends JFrame {
 
 		public void windowClosing(WindowEvent e) {
 			JFrame frame = (JFrame)e.getSource();
-			int result = JOptionPane.showConfirmDialog(frame, "Are you sure?", "Exit Application", JOptionPane.YES_NO_OPTION );
+			int result = JOptionPane.showConfirmDialog(frame, "Are you sure?", "Exit subject discussion", JOptionPane.YES_NO_OPTION );
 			if (result == JOptionPane.YES_OPTION) {
 				try {
 					controller.pleaseUnsubscribe(subject, client);

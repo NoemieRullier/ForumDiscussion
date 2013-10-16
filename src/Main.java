@@ -9,7 +9,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		/*ISubjectDiscussion s = new SubjectDiscussion("voui");
 		DisplayClient dc = new DisplayClient("Cinema",s);*/
-		new LoginView();
+	//	new LoginView();
 	}
 
 }

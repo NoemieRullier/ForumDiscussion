@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import server.IServerForum;
 import server.ISubjectDiscussion;
 import client.controller.ClientController;
 import client.controller.IClientController;
@@ -35,21 +36,30 @@ public class MainWindowClient extends JFrame {
 
 	
 	private IClientController controller;
-	private IClient client; 
+	private IClient client;
+	private static List<ISubjectDiscussion> listSubject = new ArrayList<ISubjectDiscussion>();
 	
 	private JButton buttonSubject;
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
 	private JPanel panel = new JPanel();
 	private ImageIcon iconWindow = new ImageIcon("img/speech-bubble_32.png");
-
-	public MainWindowClient( List<ISubjectDiscussion> listSubject, String pseudo) throws RemoteException {
+	private String pseudo;
+	
+	public MainWindowClient(IServerForum chatServer) throws RemoteException {
 		
-		this.controller = new ClientController(this);
-		this.client = new Client(controller, pseudo);
+		this.controller = new ClientController(this, chatServer);
 		
-		for ( ISubjectDiscussion s : listSubject ){
-			buttonSubject = new JButton( s.getTitle() );
-			buttonSubject.addActionListener( new ButtonSubscribeListener( s ) ); 
+		new LoginView(this, true);
+		
+		this.client = new Client(controller, this.pseudo);
+		
+		int nbSujets = chatServer.nbSujets();
+		for ( int i = 0 ; i < nbSujets ; i++ ) {
+			ISubjectDiscussion sujet = chatServer.sendSubject( i ); 
+			System.out.println( sujet.getTitle() ); 
+			listSubject.add( sujet );
+			buttonSubject = new JButton( sujet.getTitle() );
+			buttonSubject.addActionListener( new ButtonSubscribeListener( sujet ) ); 
 			panel.add(buttonSubject);
 			listButtonSubject.add(buttonSubject);
 		}
@@ -61,6 +71,29 @@ public class MainWindowClient extends JFrame {
 		this.setSize(600, 70);
 	}
 	
+	
+	public String getPseudo() {
+		return pseudo;
+	}
+
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+
+
+	public IClientController getController() {
+		return controller;
+	}
+
+
+
+	public void setController(IClientController controller) {
+		this.controller = controller;
+	}
+
+
+
 	public void activeButton(String title){
 		for (JButton button : listButtonSubject){
 			if (button.getText().equals(title)){
