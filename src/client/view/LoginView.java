@@ -29,8 +29,6 @@ public class LoginView extends JDialog {
 	private JTextField pseudoField = new JTextField();
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel panel = new JPanel();
-	/*private JButton verifyButton = new JButton();
-	private ImageIcon verifyIcon = new ImageIcon("img/recycling_32.png");*/
 	private JButton validateButton = new JButton("Valider");
 	private ImageIcon validateIcon = new ImageIcon("img/badge_32.png");
 	private Color redColor = new Color(255, 55, 63); 
@@ -63,17 +61,6 @@ public class LoginView extends JDialog {
 		gbc.anchor = GridBagConstraints.CENTER; // Position
 		gbc.insets = new Insets(5, 10, 5, 10);
 		panel.add(pseudoField,gbc);
-		/*gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.gridheight = 1;
-		gbc.weightx = 0.1;
-		gbc.weighty = 0;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(10, 5, 5, 10);
-		verifyButton.setIcon(verifyIcon);
-		panel.add(verifyButton, gbc);*/
 		/* Message error */
 		gbc.gridx = 0;
 		gbc.gridy = 2;

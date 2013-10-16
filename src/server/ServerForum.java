@@ -5,8 +5,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.model.IClient;
-
 public class ServerForum extends UnicastRemoteObject implements IServerForum {
 
 
