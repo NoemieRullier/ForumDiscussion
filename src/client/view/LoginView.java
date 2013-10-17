@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.rmi.RemoteException;
 
 import javax.swing.ImageIcon;
@@ -18,12 +20,12 @@ import javax.swing.JTextField;
 
 
 public class LoginView extends JDialog {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2986772578238274359L;
-	
+
 	private JLabel indicationLabel = new JLabel("Choose a pseudo");
 	private JLabel messageLabel = new JLabel();
 	private JTextField pseudoField = new JTextField();
@@ -34,7 +36,7 @@ public class LoginView extends JDialog {
 	private Color redColor = new Color(255, 55, 63); 
 
 	private MainWindowClient parent;
-	
+
 	public LoginView(JFrame parent, boolean modal){
 		super(parent, modal);
 		this.parent = (MainWindowClient) parent;
@@ -60,6 +62,7 @@ public class LoginView extends JDialog {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.CENTER; // Position
 		gbc.insets = new Insets(5, 10, 5, 10);
+		pseudoField.addKeyListener(new PseudoKeyListener());
 		panel.add(pseudoField,gbc);
 		/* Message error */
 		gbc.gridx = 0;
@@ -86,18 +89,18 @@ public class LoginView extends JDialog {
 		validateButton.setIcon(validateIcon);
 		validateButton.addActionListener(new ValidateButtonListener(this));
 		panel.add(validateButton, gbc);
-		
+
 		this.setSize(400, 200);
 		this.setLocationRelativeTo(null);
 		this.setUndecorated(true);
 		this.setContentPane(panel);
 		this.setVisible(true);
 	}
-	
+
 	private class ValidateButtonListener implements ActionListener {
-		
+
 		private LoginView source;
-		
+
 		public ValidateButtonListener(LoginView source) {
 			this.source = source;
 		}
@@ -107,7 +110,7 @@ public class LoginView extends JDialog {
 			boolean dispo = false;
 			try {
 				dispo = parent.getController().verifyAvailableLogin(pseudoField.getText()); 
-				
+
 			} catch (RemoteException e1) {
 				System.out.println("Impossible to verify");
 				e1.printStackTrace();
@@ -121,7 +124,27 @@ public class LoginView extends JDialog {
 				pseudoField.setText("");
 			}
 		}
-		
+
+	}
+
+	private class PseudoKeyListener implements KeyListener {
+
+		@Override
+		public void keyPressed(KeyEvent k) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent k) {
+		}
+
+		@Override
+		public void keyTyped(KeyEvent k) {
+			if (k.getKeyChar()==' ')
+			{ 
+				k.consume();
+			}
+		}
+
 	}
 
 }

@@ -37,25 +37,25 @@ public class MainWindowClient extends JFrame {
 	 */
 	private static final long serialVersionUID = -8596715838932975027L;
 
-	
+
 	private IClientController controller;
 	private IClient client;
 	private static List<ISubjectDiscussion> listSubject = new ArrayList<ISubjectDiscussion>();
-	
+
 	private JButton buttonSubject;
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
 	private JPanel panel = new JPanel();
 	private ImageIcon iconWindow = new ImageIcon("img/speech-bubble_32.png");
 	private String pseudo;
-	
+
 	public MainWindowClient(IServerForum chatServer) throws RemoteException {
-		
+
 		this.controller = new ClientController(this, chatServer);
-		
+
 		new LoginView(this, true);
-		
+
 		this.client = new Client(controller, this.pseudo);
-		
+
 		int nbSujets = chatServer.nbSujets();
 		for ( int i = 0 ; i < nbSujets ; i++ ) {
 			ISubjectDiscussion sujet = chatServer.sendSubject( i ); 
@@ -66,7 +66,7 @@ public class MainWindowClient extends JFrame {
 			panel.add(buttonSubject);
 			listButtonSubject.add(buttonSubject);
 		}
-		
+
 		this.setTitle( "Bienvenue " + pseudo);
 		this.setContentPane(panel);
 		this.setIconImage(iconWindow.getImage());
@@ -74,8 +74,8 @@ public class MainWindowClient extends JFrame {
 		this.setSize(600, 70);
 		this.addWindowListener( new MainWindowAdapter() );
 	}
-	
-	
+
+
 	public String getPseudo() {
 		return pseudo;
 	}
@@ -104,18 +104,16 @@ public class MainWindowClient extends JFrame {
 				button.setEnabled(true);
 			}
 		}
-		// RŽcupŽrer les boutons et leur sujets associŽ
 	}
-	
+
 	private class ButtonSubscribeListener implements ActionListener {
-		
+
 		private ISubjectDiscussion subject; 
-		
+
 		public ButtonSubscribeListener( ISubjectDiscussion subject ) {
 			this.subject = subject; 
 		}
-		
-		
+
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			try {
@@ -127,7 +125,7 @@ public class MainWindowClient extends JFrame {
 			} 
 		}
 	}
-	
+
 	private class MainWindowAdapter extends WindowAdapter {
 
 		public void windowClosing(WindowEvent e) {
@@ -144,5 +142,5 @@ public class MainWindowClient extends JFrame {
 			} 
 		}
 	}
-	
+
 }

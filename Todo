@@ -3,4 +3,11 @@
 3) Possibilité de supprimer un sujet ? Que fait-on de ceux connecté actuellement, Qui peux les supprimer
 4) Voir pour un historique des message -> Lors de la connexion d'un nouveaux membre on lui affiche les combien derniers ? Ou on lui demande s'il veut charger l'historique ?
 
+Si le temps:
+- Dans la fenêtre du pseudo, ajouter lapossibilité de valider avec entrer et dans windows de chat ajouter la case à cocher et possibilité d'envoyer par entrer
+- Revoir interface de la windows principal
+- Mettre animation tournante le temps de charger les fenêtre de discussion car accès seulement si personnes n'écrit ?
+- Ajouter l'heure du message et les autres envoyeurs dans une autre couleur + Pourquoi pas ajouter le nombre de personnes connectée sur le chat
+- Voir si on interdit des caractère dans le login -> Pour le moment espace enlevé
+
 5) Gérer toutes les exceptions et qu'est-ce que l'on fait on arrête la discussion ...
