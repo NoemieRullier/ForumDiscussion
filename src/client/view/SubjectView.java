@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -20,8 +22,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 import server.ISubjectDiscussion;
 import client.controller.IClientController;
@@ -43,10 +47,22 @@ public class SubjectView extends JFrame {
 	private JScrollPane discussionPane = new JScrollPane(discussionArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JTextArea newMessageArea = new JTextArea();
 	private JScrollPane newMessagePane = new JScrollPane(newMessageArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	private JRadioButton enterToSend = new JRadioButton("Appuyer sur Entrée pour envoyer");
 	private ImageIcon icon = new ImageIcon("img/email_32.png");
 	private JButton sendButton = new JButton("Envoyer",icon);
 	private Color mineColor;
 	private Color otherColor;
+	
+	private Action sendMessage = new AbstractAction() {
+	    /**
+		 * 
+		 */
+		private static final long serialVersionUID = -8635491944222365643L;
+
+		public void actionPerformed(ActionEvent e) {
+	        sendMessage();
+	    }
+	};
 
 	private IClientController controller;
 	private IClient client;
@@ -104,12 +120,24 @@ public class SubjectView extends JFrame {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = new Insets(5, 10, 5, 10);
-		newMessageArea.setLineWrap(true);
+		newMessageArea.setLineWrap(true); // Return at the line
 		//newMessageArea.requestFocus();
 		panel.add(newMessagePane,gbc);
-		/* Send Button */
+		/* CheckBox */
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridheight = 1;
+		gbc.weightx = 0;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.LINE_END;
+		gbc.insets = new Insets(5, 10, 5, 10);
+		enterToSend.addActionListener(new RadioButtonListener());
+		panel.add(enterToSend,gbc);
+		/* Send Button */
+		gbc.gridx = 0;
+		gbc.gridy = 4;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.weightx = 0;
@@ -134,20 +162,29 @@ public class SubjectView extends JFrame {
 	public void displayMessage( String msg ) throws RemoteException {
 		discussionArea.append( msg ); 
 	}
+	
+	private class RadioButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (enterToSend.isSelected()){
+				newMessageArea.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "sendMessage");
+				newMessageArea.getActionMap().put("sendMessage", sendMessage);
+			}
+			else {
+				// Default behavior
+				newMessageArea.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), null);
+			}
+		}
+		
+	}
 
 	
 	private class ButtonSendListener implements ActionListener {
 
 		@Override
 		public void actionPerformed( ActionEvent e ) {
-			try {
-				controller.pleaseSendMessage( subject, "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - " + pseudo + " : " + newMessageArea.getText() + "\n", client);
-			} catch( RemoteException e1 ) {
-				System.out.println("Impossible to send a message");
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 
-			newMessageArea.setText( "" ); 
+			sendMessage();
 		}
 	}
 	
@@ -175,6 +212,16 @@ public class SubjectView extends JFrame {
 					e1.printStackTrace();
 				}
 			} 
+		}
+	}
+	
+	private void sendMessage(){
+		try {
+			controller.pleaseSendMessage( subject, "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - " + pseudo + " : " + newMessageArea.getText() + "\n", client);
+			newMessageArea.setText( "" );
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

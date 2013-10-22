@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.rmi.RemoteException;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 
 public class LoginView extends JDialog {
@@ -33,7 +36,26 @@ public class LoginView extends JDialog {
 	private JPanel panel = new JPanel();
 	private JButton validateButton = new JButton("Valider");
 	private ImageIcon validateIcon = new ImageIcon("img/badge_32.png");
-	private Color redColor = new Color(255, 55, 63); 
+	private Color redColor = new Color(255, 55, 63);
+
+	private Action sendLogin = new ActionSend(this);
+
+	private class ActionSend extends AbstractAction {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -185704272279549730L;
+		private LoginView source ;
+
+		public ActionSend(LoginView source){
+			this.source = source;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			sendLogin(source);
+		}
+	};
 
 	private MainWindowClient parent;
 
@@ -63,6 +85,8 @@ public class LoginView extends JDialog {
 		gbc.anchor = GridBagConstraints.CENTER; // Position
 		gbc.insets = new Insets(5, 10, 5, 10);
 		pseudoField.addKeyListener(new PseudoKeyListener());
+		pseudoField.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "sendLogin");
+		pseudoField.getActionMap().put("sendLogin", sendLogin);
 		panel.add(pseudoField,gbc);
 		/* Message error */
 		gbc.gridx = 0;
@@ -107,22 +131,7 @@ public class LoginView extends JDialog {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			boolean dispo = false;
-			try {
-				dispo = parent.getController().verifyAvailableLogin(pseudoField.getText()); 
-
-			} catch (RemoteException e1) {
-				System.out.println("Impossible to verify");
-				e1.printStackTrace();
-			}
-			if (dispo){
-				parent.setPseudo(pseudoField.getText());
-				source.dispose();
-			}
-			else {
-				messageLabel.setText("Pseudo " + pseudoField.getText() + " already use. Please choose another");
-				pseudoField.setText("");
-			}
+			sendLogin(source);
 		}
 
 	}
@@ -145,6 +154,24 @@ public class LoginView extends JDialog {
 			}
 		}
 
+	}
+
+	private void sendLogin(LoginView source){
+		boolean dispo = false;
+		try {
+			dispo = parent.getController().verifyAvailableLogin(pseudoField.getText()); 
+		} catch (RemoteException e1) {
+			System.out.println("Impossible to verify");
+			e1.printStackTrace();
+		}
+		if (dispo){
+			parent.setPseudo(pseudoField.getText());
+			source.dispose(); // Close windows
+		}
+		else {
+			messageLabel.setText("Pseudo " + pseudoField.getText() + " already use. Please choose another");
+			pseudoField.setText("");
+		}
 	}
 
 }
