@@ -1,5 +1,6 @@
 package client.view;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -8,9 +9,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,13 +45,15 @@ public class SubjectView extends JFrame {
 	private JScrollPane newMessagePane = new JScrollPane(newMessageArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private ImageIcon icon = new ImageIcon("img/email_32.png");
 	private JButton sendButton = new JButton("Envoyer",icon);
+	private Color mineColor;
+	private Color otherColor;
 
 	private IClientController controller;
 	private IClient client;
 	private ISubjectDiscussion subject; 
 	private String title; 
 	private String pseudo; 
-
+	
 	public SubjectView( ISubjectDiscussion subject, IClientController controller, IClient client ){
 		this.subject = subject; 
 		this.client = client;
@@ -134,7 +141,7 @@ public class SubjectView extends JFrame {
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			try {
-				controller.pleaseSendMessage( subject, pseudo + " : " + newMessageArea.getText() + "\n", client);
+				controller.pleaseSendMessage( subject, "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - " + pseudo + " : " + newMessageArea.getText() + "\n", client);
 			} catch( RemoteException e1 ) {
 				System.out.println("Impossible to send a message");
 				// TODO Auto-generated catch block
@@ -142,6 +149,16 @@ public class SubjectView extends JFrame {
 			} 
 			newMessageArea.setText( "" ); 
 		}
+	}
+	
+	private class ColorChooser implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// Ajouter en fonction du bouton choisi
+			Color background = JColorChooser.showDialog(null,"JColorChooser Sample", null);
+		}
+		
 	}
 
 	private class SubjectWindowAdapter extends WindowAdapter {
