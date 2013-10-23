@@ -17,6 +17,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,7 +48,7 @@ public class SubjectView extends JFrame {
 	private JScrollPane discussionPane = new JScrollPane(discussionArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JTextArea newMessageArea = new JTextArea();
 	private JScrollPane newMessagePane = new JScrollPane(newMessageArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-	private JRadioButton enterToSend = new JRadioButton("Appuyer sur Entrée pour envoyer");
+	private JCheckBox enterToSend = new JCheckBox("Appuyer sur Entrée pour envoyer");
 	private ImageIcon icon = new ImageIcon("img/email_32.png");
 	private JButton sendButton = new JButton("Envoyer",icon);
 	private Color mineColor;
