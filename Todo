@@ -1,9 +1,8 @@
-1) Grer toutes les exceptions et qu'est-ce que l'on fait on arrte la discussion ...
-
-2) Ajouter la possibilit aux clients de crer des sujet comment faire pour que les autres clients soient notifi et que le sujet apparaissent
+1) Ajouter la possibilit aux clients de crer des sujet comment faire pour que les autres clients soient notifi et que le sujet apparaissent
 	|-> Synchronized pour l'accs ˆ la liste des sujet ?
-3) Possibilit de supprimer un sujet ? Que fait-on de ceux connect actuellement, Qui peux les supprimer
+2) Possibilit de supprimer un sujet ? Que fait-on de ceux connect actuellement, Qui peux les supprimer
 
+3) Quand le server est arreter pdt que des clients sont connect --> Une fois celuici redmarrer a fout la merde ! Impossible de rejoidre le server
 
 Si le temps:
 - Cmd+Q -> Doit aussi appeler dsabonner
