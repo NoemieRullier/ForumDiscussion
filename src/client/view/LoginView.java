@@ -156,6 +156,10 @@ public class LoginView extends JDialog {
 
 	}
 
+	/**
+	 * Send the login source to the server
+	 * @param source
+	 */
 	private void sendLogin(LoginView source){
 		boolean dispo = false;
 		try {

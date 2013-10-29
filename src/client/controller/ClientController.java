@@ -19,20 +19,17 @@ import server.ISubjectDiscussion;
  *
  */
 public class ClientController implements IClientController {
-	
+
 	private IServerForum chatServer;
 	private Map< ISubjectDiscussion, SubjectView > mapsv;
 	private MainWindowClient mainWindowClient;
-	
+
 	public ClientController(MainWindowClient mainWindowClient, IServerForum chatServer) {
 		this.chatServer = chatServer;
 		this.mainWindowClient = mainWindowClient;
 		mapsv = new HashMap< ISubjectDiscussion, SubjectView >(); 
 	}
-	
-	/* (non-Javadoc)
-	 * @see client.controller.IClientController#pleaseSubscribe(server.ISubjectDiscussion, client.model.IClient)
-	 */
+
 	@Override
 	public void pleaseSubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException {
 		// TODO Add JProgress bar en attendant que connexion soit OK ?
@@ -40,11 +37,7 @@ public class ClientController implements IClientController {
 			mapsv.put( subject, new SubjectView( subject, this, client ) ); 
 		}
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see client.controller.IClientController#pleaseSubscribe(server.ISubjectDiscussion, client.model.IClient)
-	 */
+
 	@Override
 	public void pleaseUnsubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException { 
 		if ( client.pleaseUnsubscribe(subject)) {
@@ -52,18 +45,12 @@ public class ClientController implements IClientController {
 		}
 		mainWindowClient.activeButton(subject.getTitle());
 	}
-	
-	/* (non-Javadoc)
-	 * @see client.controller.IClientController#pleaseSendMessage(server.ISubjectDiscussion, java.lang.String)
-	 */
+
 	@Override
 	public void pleaseSendMessage( ISubjectDiscussion subject, String msg, IClient client ) throws RemoteException {
 		client.pleaseSendMessage(subject, msg);
 	}
-	
-	/* (non-Javadoc)
-	 * @see client.controller.IClientController#displayMessage(server.ISubjectDiscussion, java.lang.String)
-	 */
+
 	@Override
 	public void displayMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
 		mapsv.get( subject ).displayMessage( msg ); 
@@ -78,5 +65,5 @@ public class ClientController implements IClientController {
 	public void pleaseRemoveLogin(String login) throws RemoteException {
 		chatServer.removeLogin(login);
 	}
-	
+
 }

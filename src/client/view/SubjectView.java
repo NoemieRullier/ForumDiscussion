@@ -39,8 +39,8 @@ public class SubjectView extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 131464122541584573L;
-	
-	
+
+
 	private JPanel panel = new JPanel();
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JLabel labelTitle = new JLabel();
@@ -53,16 +53,16 @@ public class SubjectView extends JFrame {
 	private JButton sendButton = new JButton("Envoyer",icon);
 	private Color mineColor;
 	private Color otherColor;
-	
+
 	private Action sendMessage = new AbstractAction() {
-	    /**
+		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -8635491944222365643L;
 
 		public void actionPerformed(ActionEvent e) {
-	        sendMessage();
-	    }
+			sendMessage();
+		}
 	};
 
 	private IClientController controller;
@@ -70,11 +70,11 @@ public class SubjectView extends JFrame {
 	private ISubjectDiscussion subject; 
 	private String title; 
 	private String pseudo; 
-	
+
 	public SubjectView( ISubjectDiscussion subject, IClientController controller, IClient client ){
 		this.subject = subject; 
 		this.client = client;
-		
+
 		try {
 			this.title = subject.getTitle();
 			this.pseudo = client.getLogin();
@@ -160,10 +160,15 @@ public class SubjectView extends JFrame {
 		this.addWindowListener( new SubjectWindowAdapter() );
 	}
 
+	/**
+	 * Display the message in the JTextArea
+	 * @param msg
+	 * @throws RemoteException
+	 */
 	public void displayMessage( String msg ) throws RemoteException {
 		discussionArea.append( msg ); 
 	}
-	
+
 	private class RadioButtonListener implements ActionListener {
 
 		@Override
@@ -177,10 +182,9 @@ public class SubjectView extends JFrame {
 				newMessageArea.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), null);
 			}
 		}
-		
+
 	}
 
-	
 	private class ButtonSendListener implements ActionListener {
 
 		@Override
@@ -188,7 +192,7 @@ public class SubjectView extends JFrame {
 			sendMessage();
 		}
 	}
-	
+
 	private class ColorChooser implements ActionListener {
 
 		@Override
@@ -196,7 +200,7 @@ public class SubjectView extends JFrame {
 			// Ajouter en fonction du bouton choisi
 			Color background = JColorChooser.showDialog(null,"JColorChooser Sample", null);
 		}
-		
+
 	}
 
 	private class SubjectWindowAdapter extends WindowAdapter {
@@ -215,7 +219,10 @@ public class SubjectView extends JFrame {
 			} 
 		}
 	}
-	
+
+	/**
+	 * Send the message in the JTextArea (By Cliking on the button or type enter)
+	 */
 	private void sendMessage(){
 		try {
 			controller.pleaseSendMessage( subject, "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - " + pseudo + " : " + newMessageArea.getText() + "\n", client);
