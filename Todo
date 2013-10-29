@@ -1,13 +1,14 @@
+1) Grer toutes les exceptions et qu'est-ce que l'on fait on arrte la discussion ...
+
 2) Ajouter la possibilit aux clients de crer des sujet comment faire pour que les autres clients soient notifi et que le sujet apparaissent
 	|-> Synchronized pour l'accs ˆ la liste des sujet ?
 3) Possibilit de supprimer un sujet ? Que fait-on de ceux connect actuellement, Qui peux les supprimer
-4) Voir pour un historique des message -> Lors de la connexion d'un nouveaux membre on lui affiche les combien derniers ? Ou on lui demande s'il veut charger l'historique ?
+
 
 Si le temps:
 - Cmd+Q -> Doit aussi appeler dsabonner
 - Revoir interface de la windows principal
+- Voir pour un historique des message -> Lors de la connexion d'un nouveaux membre on lui affiche les combien derniers ? Ou on lui demande s'il veut charger l'historique ?
 - Mettre animation tournante le temps de charger les fentre de discussion car accs seulement si personnes n'crit ?
 - Ajouter les autres envoyeurs dans une autre couleur (choix de la couleur par l'utilisateur lui et les autres) + Pourquoi pas ajouter le nombre de personnes connecte sur le chat
-- Voir si on interdit des caractre dans le login -> Pour le moment espace enlev | Mettre taille limite
-
-5) Grer toutes les exceptions et qu'est-ce que l'on fait on arrte la discussion ...
+- Voir si on interdit des caractre dans le login -> Pour le moment espace enlev | Mettre taille limite 
