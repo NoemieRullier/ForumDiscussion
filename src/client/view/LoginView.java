@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -165,8 +166,8 @@ public class LoginView extends JDialog {
 		try {
 			dispo = parent.getController().verifyAvailableLogin(pseudoField.getText()); 
 		} catch (RemoteException e1) {
-			System.out.println("Impossible to verify");
 			e1.printStackTrace();
+			displayError("Impossible d'acceder au server pour verifier la disponibilite du pseudo. \nVeuillez recommencer ulterieurement");
 		}
 		if (dispo){
 			parent.setPseudo(pseudoField.getText());
@@ -178,4 +179,11 @@ public class LoginView extends JDialog {
 		}
 	}
 
+	/**
+	 * Display a JDialog with the error
+	 * @param error
+	 */
+	public void displayError(String error){
+		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
 }

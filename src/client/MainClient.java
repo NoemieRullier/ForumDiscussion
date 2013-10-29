@@ -1,7 +1,11 @@
 package client;
 
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import server.IServerForum;
 import client.view.MainWindowClient;
@@ -16,9 +20,17 @@ public class MainClient {
 			System.out.println("Connexion OK");
 			new MainWindowClient(chatServer);
 		}
-		catch (Exception e){
+		catch (UnknownHostException e){
 			e.printStackTrace();
-			System.out.println("Ca marche pas");
+		}
+		catch(NotBoundException e){
+			e.printStackTrace();
+		}
+		catch (MalformedURLException e){
+			e.printStackTrace();
+		}
+		catch (RemoteException e){
+			e.printStackTrace();
 		}
 	}
 

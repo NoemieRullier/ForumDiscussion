@@ -1,6 +1,6 @@
 package client.view;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,12 +18,11 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
+//import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
@@ -51,8 +50,8 @@ public class SubjectView extends JFrame {
 	private JCheckBox enterToSend = new JCheckBox("Appuyer sur Entrée pour envoyer");
 	private ImageIcon icon = new ImageIcon("img/email_32.png");
 	private JButton sendButton = new JButton("Envoyer",icon);
-	private Color mineColor;
-	private Color otherColor;
+//	private Color mineColor;
+//	private Color otherColor;
 
 	private Action sendMessage = new AbstractAction() {
 		/**
@@ -193,15 +192,14 @@ public class SubjectView extends JFrame {
 		}
 	}
 
-	private class ColorChooser implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// Ajouter en fonction du bouton choisi
-			Color background = JColorChooser.showDialog(null,"JColorChooser Sample", null);
-		}
-
-	}
+//	private class ColorChooser implements ActionListener {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent arg0) {
+//			// Ajouter en fonction du bouton choisi
+//			Color background = JColorChooser.showDialog(null,"JColorChooser Sample", null);
+//		}
+//	}
 
 	private class SubjectWindowAdapter extends WindowAdapter {
 
@@ -213,8 +211,8 @@ public class SubjectView extends JFrame {
 					controller.pleaseUnsubscribe(subject, client);
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					displayError("Impossible d'acceder au server pour vous desinscrire. \nVeuillez recommencer ulterieurement");
 				}
 			} 
 		}
@@ -228,8 +226,16 @@ public class SubjectView extends JFrame {
 			controller.pleaseSendMessage( subject, "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - " + pseudo + " : " + newMessageArea.getText() + "\n", client);
 			newMessageArea.setText( "" );
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			displayError("Impossible d'acceder au server pour envoyer le message. \nVeuillez recommencer ulterieurement");
 		}
+	}
+	
+	/**
+	 * Display a JDialog with the error
+	 * @param error
+	 */
+	public void displayError(String error){
+		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

@@ -1,13 +1,14 @@
 package server;
 
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
 public class MainServer {
 	
-	public static boolean debug = false;
-
 	public static void main(String[] args) {
 		try {
 			LocateRegistry.createRegistry(1099);
@@ -22,11 +23,14 @@ public class MainServer {
 			Naming.rebind(serverAddress, server);
 			System.out.println("Server start !");
 		}
-		catch (Exception e) {
-			if (debug) {
-				e.printStackTrace();
-			}
-			System.out.println("Error");
+		catch (MalformedURLException e){
+			e.printStackTrace();
+		}
+		catch (RemoteException e){
+			e.printStackTrace();
+		}
+		catch (UnknownHostException e){
+			e.printStackTrace();
 		}
 	}
 

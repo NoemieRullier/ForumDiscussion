@@ -120,8 +120,8 @@ public class MainWindowClient extends JFrame {
 				controller.pleaseSubscribe( subject, client );
 				((AbstractButton) e.getSource()).setEnabled(false);
 			} catch( RemoteException e1 ) {
-				System.out.println( "le main window client marche paaaaas T_T" );
 				e1.printStackTrace();
+				displayError("Impossible d'acceder au server pour vous connecter au sujet. \nVeuillez recommencer ulterieurement");
 			} 
 		}
 	}
@@ -136,11 +136,19 @@ public class MainWindowClient extends JFrame {
 					controller.pleaseRemoveLogin(client.getLogin());
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					displayError("Impossible d'acceder au server pour vous deconnecter du sujet. \nVeuillez recommencer ulterieurement");
 				}
 			} 
 		}
+	}
+	
+	/**
+	 * Display a JDialog with the error
+	 * @param error
+	 */
+	public void displayError(String error){
+		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
 }
