@@ -38,7 +38,6 @@ public interface IServerForum extends Remote {
 	 * @return The SubjectDiscussion corresponding to the pos in the list of subjects
 	 * @throws RemoteException
 	 */
-//	public ISubjectDiscussion sendSubject( int pos ) throws RemoteException;
 
 	/**
 	 * Define if the pseudo is available

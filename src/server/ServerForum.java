@@ -17,19 +17,13 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	 */
 	private static final long serialVersionUID = -6843509051426878264L;
 
-//	private List<ISubjectDiscussion> listSubject;
 	private HashMap<String,ISubjectProvider> listProvider;
 	private List<String> pseudosUsed;
 	private final Object listPseudoMonitor = new Object(); // Protects "pseudosUsed"
 
 	public ServerForum() throws RemoteException {
 		listProvider = new HashMap<String, ISubjectProvider>();
-//		listSubject = new ArrayList<ISubjectDiscussion>();
 		pseudosUsed = new ArrayList<String>();
-		
-		//addSubjectDiscussion("Cinema");
-		//addSubjectDiscussion("Gymnastique");
-		//addSubjectDiscussion("Radio");
 	}
 	
 	public void initializeSubjects() throws RemoteException{
