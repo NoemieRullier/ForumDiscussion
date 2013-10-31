@@ -1,6 +1,4 @@
-1) Ajouter la possibilité aux clients de créer des sujet comment faire pour que les autres clients soient notifié et que le sujet apparaissent
-	|-> Synchronized pour l'accès à la liste des sujet ?
-2) Possibilité de supprimer un sujet ? Que fait-on de ceux connecté actuellement, Qui peux les supprimer
+2) Possibilité de supprimer un sujet ? --> Que fait-on de ceux connecté actuellement, Qui peux les supprimer
 
 3) Quand le server est arreter pdt que des clients sont connecté --> Une fois celuici redémarrer ça fout la merde ! Impossible de rejoidre le server
 

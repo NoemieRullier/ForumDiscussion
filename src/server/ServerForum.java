@@ -20,6 +20,7 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	private HashMap<String,ISubjectProvider> listProvider;
 	private HashMap<String, IClient> pseudosUsed;
 	private final Object listPseudoMonitor = new Object(); // Protects "pseudosUsed"
+	private final Object listProviderMonitor = new Object(); // Protects "listProvider"
 
 	public ServerForum() throws RemoteException {
 		listProvider = new HashMap<String, ISubjectProvider>();
@@ -100,7 +101,9 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 
 	@Override
 	public boolean verifyAvailableTitle(String title) throws RemoteException {
-		return ! this.listProvider.containsKey(title);
+		synchronized (listProviderMonitor) {
+			return ! this.listProvider.containsKey(title);
+		}
 	}
 
 	@Override
