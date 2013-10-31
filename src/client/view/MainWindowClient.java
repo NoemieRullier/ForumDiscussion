@@ -41,7 +41,6 @@ public class MainWindowClient extends JFrame {
 
 	private IClientController controller;
 	private IClient client;
-//	private static List<ISubjectDiscussion> listSubject = new ArrayList<ISubjectDiscussion>();
 
 	private JButton buttonSubject;
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
@@ -58,16 +57,10 @@ public class MainWindowClient extends JFrame {
 
 		this.client = new Client(controller, this.pseudo);
 
-//		int nbSujets = chatServer.nbSujets();
 		ArrayList<String> subjects = this.chatServer.sendSubjects();
 		for (String s : subjects){
-			
-//		for ( int i = 0 ; i < nbSujets ; i++ ) {
-//			ISubjectDiscussion sujet = chatServer.sendSubject( i ); 
-//			System.out.println( sujet.getTitle() ); 
-//			listSubject.add( sujet );
-			buttonSubject = new JButton( /*sujet.getTitle()*/s );
-			buttonSubject.addActionListener( new ButtonSubscribeListener( /*sujet*/s ) ); 
+			buttonSubject = new JButton(s);
+			buttonSubject.addActionListener(new ButtonSubscribeListener(s)); 
 			panel.add(buttonSubject);
 			listButtonSubject.add(buttonSubject);
 		}
@@ -113,11 +106,9 @@ public class MainWindowClient extends JFrame {
 
 	private class ButtonSubscribeListener implements ActionListener {
 
-//		private ISubjectDiscussion subject; 
 		private String title;
 
-		public ButtonSubscribeListener( /*ISubjectDiscussion subject*/String title ) {
-//			this.subject = subject;
+		public ButtonSubscribeListener(String title) {
 			this.title = title;
 		}
 
