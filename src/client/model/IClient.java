@@ -62,4 +62,10 @@ public interface IClient  extends Remote {
 	 */
 	public boolean equals( IClient client ) throws RemoteException;
 	
+	/**
+	 * Recuperate all subjects
+	 * @throws RemoteException
+	 */
+	public void recuperateSubjects() throws RemoteException;
+	
 }

@@ -69,4 +69,10 @@ public interface IClientController{
 	 * @throws RemoteException
 	 */
 	public void addSubjectDiscussion(String title) throws RemoteException;
+	
+	/**
+	 * Recuperate all new subjects
+	 * @throws RemoteException
+	 */
+	public void recuperateSubjects() throws RemoteException;
 }

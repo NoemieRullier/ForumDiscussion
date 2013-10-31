@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import client.model.IClient;
 import provider.ISubjectProvider;
 
 public interface IServerForum extends Remote {
@@ -22,7 +23,7 @@ public interface IServerForum extends Remote {
 	 * @return true if the subject doesn't exist and is add, false otherwise
 	 * @throws RemoteException
 	 */
-	public boolean addSubjectDiscussion(String title) throws RemoteException; 
+	public boolean addSubjectDiscussion(String title) throws RemoteException;
 
 
 	/**
@@ -68,4 +69,12 @@ public interface IServerForum extends Remote {
 	 * @throws RemoteException
 	 */
 	public boolean verifyAvailableTitle(String title) throws RemoteException;
+	
+	/**
+	 * Add the client associate with pseudo
+	 * @param pseudo
+	 * @param client
+	 * @throws RemoteException
+	 */
+	public void addClient(String pseudo, IClient client) throws RemoteException;
 }

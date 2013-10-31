@@ -3,6 +3,7 @@
  */
 package client.view;
 
+//import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -65,7 +66,8 @@ public class MainWindowClient extends JFrame {
 		new LoginView(this, true);
 
 		this.client = new Client(controller, this.pseudo);
-
+		chatServer.addClient(this.pseudo, this.client);
+		
 		panel.setLayout(new GridBagLayout());
 		/* Menu */
 		gbc.gridx = 0;
@@ -94,27 +96,7 @@ public class MainWindowClient extends JFrame {
 		panel.add(line,gbc);
 		
 		/* List of subjects */
-		ArrayList<String> subjects = this.chatServer.sendSubjects();
-		int nbSubjects = subjects.size();
-		int nbSubjectsByLine = 5;
-		listButton.setLayout(new GridLayout(nbSubjects/nbSubjectsByLine+1,nbSubjectsByLine));
-//		listButton.setBackground(new Color(240, 109, 158));
-		for (String s : subjects){
-			buttonSubject = new JButton(s);
-			buttonSubject.addActionListener(new ButtonSubscribeListener(s)); 
-			listButton.add(buttonSubject);
-			listButtonSubject.add(buttonSubject);
-		}
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
-		gbc.gridheight = 1; // One cell in height
-		gbc.weightx = 1;
-		gbc.weighty = 0;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.CENTER; // Position
-		gbc.insets = new Insets(10, 10, 5, 10);
-		panel.add(listButton,gbc);
+		getAllSubjects();
 
 		this.setTitle( "Bienvenue " + pseudo);
 		this.setContentPane(panel);
@@ -123,6 +105,19 @@ public class MainWindowClient extends JFrame {
 		this.setSize(900, 800);
 		this.addWindowListener( new MainWindowAdapter() );
 	}
+
+	
+
+	public JPanel getListButton() {
+		return listButton;
+	}
+
+
+
+	public void setListButton(JPanel listButton) {
+		this.listButton = listButton;
+	}
+
 
 
 	public String getPseudo() {
@@ -143,6 +138,17 @@ public class MainWindowClient extends JFrame {
 
 	public void setController(IClientController controller) {
 		this.controller = controller;
+	}
+
+
+	public IClient getClient() {
+		return client;
+	}
+
+
+
+	public void setClient(IClient client) {
+		this.client = client;
 	}
 
 
@@ -214,6 +220,37 @@ public class MainWindowClient extends JFrame {
 	 */
 	public void displayError(String error){
 		JOptionPane.showMessageDialog(null, error, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void getAllSubjects(){
+		ArrayList<String> subjects = new ArrayList<String>();
+		try {
+			subjects = chatServer.sendSubjects();
+			int nbSubjects = subjects.size();
+			int nbSubjectsByLine = 5;
+			listButton.setLayout(new GridLayout(nbSubjects/nbSubjectsByLine+1,nbSubjectsByLine));
+//			listButton.setBackground(new Color(240, 109, 158));
+			System.out.println("on passe recherche boutons " + nbSubjects);
+			for (String s : subjects){
+				System.out.println(s);
+				buttonSubject = new JButton(s);
+				buttonSubject.addActionListener(new ButtonSubscribeListener(s)); 
+				listButton.add(buttonSubject);
+				listButtonSubject.add(buttonSubject);
+			}
+			gbc.gridx = 0;
+			gbc.gridy = 2;
+			gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+			gbc.gridheight = 1; // One cell in height
+			gbc.weightx = 1;
+			gbc.weighty = 0;
+			gbc.fill = GridBagConstraints.BOTH;
+			gbc.anchor = GridBagConstraints.CENTER; // Position
+			gbc.insets = new Insets(10, 10, 5, 10);
+			panel.add(listButton,gbc);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

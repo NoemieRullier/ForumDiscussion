@@ -10,7 +10,6 @@ import java.util.Map;
 import provider.ISubjectProvider;
 import server.IServerForum;
 import server.ISubjectDiscussion;
-import server.SubjectDiscussion;
 import client.model.IClient;
 import client.view.MainWindowClient;
 import client.view.SubjectView;
@@ -76,6 +75,16 @@ public class ClientController implements IClientController {
 	@Override
 	public void addSubjectDiscussion(String title) throws RemoteException {
 		chatServer.addSubjectDiscussion(title);
+	}
+
+	@Override
+	public void recuperateSubjects() throws RemoteException {
+		mainWindowClient.getListButton().removeAll();
+		mainWindowClient.validate();
+		mainWindowClient.repaint();
+		mainWindowClient.getAllSubjects();
+		mainWindowClient.validate();
+		mainWindowClient.repaint();
 	}
 	
 	

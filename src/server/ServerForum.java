@@ -4,10 +4,10 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import provider.ISubjectProvider;
 import provider.SubjectProvider;
+import client.model.IClient;
 
 public class ServerForum extends UnicastRemoteObject implements IServerForum {
 
@@ -18,12 +18,12 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	private static final long serialVersionUID = -6843509051426878264L;
 
 	private HashMap<String,ISubjectProvider> listProvider;
-	private List<String> pseudosUsed;
+	private HashMap<String, IClient> pseudosUsed;
 	private final Object listPseudoMonitor = new Object(); // Protects "pseudosUsed"
 
 	public ServerForum() throws RemoteException {
 		listProvider = new HashMap<String, ISubjectProvider>();
-		pseudosUsed = new ArrayList<String>();
+		pseudosUsed = new HashMap<String, IClient>();
 	}
 	
 	public void initializeSubjects() throws RemoteException{
@@ -59,6 +59,9 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 		if ( bFree ) {
 			ISubjectProvider subj = new SubjectProvider(title);
 			this.listProvider.put(title, subj);
+			for (IClient client : pseudosUsed.values()){
+				client.recuperateSubjects();
+			}
 		}
 		return bFree;
 	}
@@ -67,13 +70,13 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	public boolean pseudoAvailable(String pseudo) throws RemoteException {
 		boolean bFree = true;
 		synchronized (listPseudoMonitor) {
-			for (String p : pseudosUsed){
+			for (String p : pseudosUsed.keySet()){
 				if (p.equals(pseudo)){
 					bFree = false;
 				}
 			}
 			if ( bFree ) {
-				this.pseudosUsed.add(pseudo);
+				this.pseudosUsed.put(pseudo, null);
 			}
 		}
 		return bFree;
@@ -83,7 +86,7 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	public void removeLogin(String login) throws RemoteException {
 		boolean bFree = false; 
 		synchronized (listPseudoMonitor) {
-			for (String p : pseudosUsed){
+			for (String p : pseudosUsed.keySet()){
 				if (p.equals(login)){
 					bFree = true;
 				}
@@ -98,6 +101,11 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	@Override
 	public boolean verifyAvailableTitle(String title) throws RemoteException {
 		return ! this.listProvider.containsKey(title);
+	}
+
+	@Override
+	public void addClient(String pseudo, IClient client) throws RemoteException {
+		pseudosUsed.put(pseudo, client);
 	}
 
 }

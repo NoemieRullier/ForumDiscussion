@@ -66,5 +66,11 @@ public class Client extends UnicastRemoteObject implements IClient {
 	public boolean equals(IClient client) throws RemoteException{
 		return (this.login.equals(client.getLogin()));
 	}
+
+
+	@Override
+	public void recuperateSubjects() throws RemoteException {
+		controller.recuperateSubjects();
+	}
 	
 }
