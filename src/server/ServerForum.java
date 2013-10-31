@@ -95,4 +95,9 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 		}
 	}
 
+	@Override
+	public boolean verifyAvailableTitle(String title) throws RemoteException {
+		return ! this.listProvider.containsKey(title);
+	}
+
 }

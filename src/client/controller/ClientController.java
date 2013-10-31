@@ -68,4 +68,16 @@ public class ClientController implements IClientController {
 		chatServer.removeLogin(login);
 	}
 
+	@Override
+	public boolean verifyAvailableTitle(String title) throws RemoteException {
+		return chatServer.verifyAvailableTitle(title);
+	}
+
+	@Override
+	public void addSubjectDiscussion(String title) throws RemoteException {
+		chatServer.addSubjectDiscussion(title);
+	}
+	
+	
+
 }

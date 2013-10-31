@@ -3,6 +3,10 @@
  */
 package client.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -17,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import provider.ISubjectProvider;
 import server.IServerForum;
@@ -48,6 +54,9 @@ public class MainWindowClient extends JFrame {
 	private ImageIcon iconWindow = new ImageIcon("img/speech-bubble_32.png");
 	private String pseudo;
 	private IServerForum chatServer;
+	private GridBagConstraints gbc = new GridBagConstraints();
+	private JButton addSubjectbutton = new JButton("Nouveau sujet");
+	private JPanel listButton = new JPanel();
 
 	public MainWindowClient(IServerForum chatServer) throws RemoteException {
 		this.chatServer = chatServer;
@@ -57,19 +66,61 @@ public class MainWindowClient extends JFrame {
 
 		this.client = new Client(controller, this.pseudo);
 
+		panel.setLayout(new GridBagLayout());
+		/* Menu */
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+		gbc.gridheight = 1; // One cell in height
+		gbc.weightx = 1;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.CENTER; // Position
+		gbc.insets = new Insets(10, 10, 5, 10);
+		addSubjectbutton.addActionListener(new NewSubjectListener(this));
+		panel.add(addSubjectbutton,gbc);
+		
+		/* Line */
+		JSeparator line = new JSeparator(SwingConstants.HORIZONTAL);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+		gbc.gridheight = 1; // One cell in height
+		gbc.weightx = 1;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.CENTER; // Position
+		gbc.insets = new Insets(10, 10, 5, 10);
+		panel.add(line,gbc);
+		
+		/* List of subjects */
 		ArrayList<String> subjects = this.chatServer.sendSubjects();
+		int nbSubjects = subjects.size();
+		int nbSubjectsByLine = 5;
+		listButton.setLayout(new GridLayout(nbSubjects/nbSubjectsByLine+1,nbSubjectsByLine));
+//		listButton.setBackground(new Color(240, 109, 158));
 		for (String s : subjects){
 			buttonSubject = new JButton(s);
 			buttonSubject.addActionListener(new ButtonSubscribeListener(s)); 
-			panel.add(buttonSubject);
+			listButton.add(buttonSubject);
 			listButtonSubject.add(buttonSubject);
 		}
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+		gbc.gridheight = 1; // One cell in height
+		gbc.weightx = 1;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.CENTER; // Position
+		gbc.insets = new Insets(10, 10, 5, 10);
+		panel.add(listButton,gbc);
 
 		this.setTitle( "Bienvenue " + pseudo);
 		this.setContentPane(panel);
 		this.setIconImage(iconWindow.getImage());
 		this.setVisible(true);
-		this.setSize(600, 70);
+		this.setSize(900, 800);
 		this.addWindowListener( new MainWindowAdapter() );
 	}
 
@@ -140,6 +191,21 @@ public class MainWindowClient extends JFrame {
 				}
 			} 
 		}
+	}
+	
+	private class NewSubjectListener implements ActionListener{
+		
+		private MainWindowClient parent;
+		
+		public NewSubjectListener(MainWindowClient parent){
+			this.parent = parent;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new NewSubjectView(parent, true);
+		}
+		
 	}
 	
 	/**

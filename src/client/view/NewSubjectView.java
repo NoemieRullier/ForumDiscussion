@@ -23,20 +23,20 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 
-public class LoginView extends JDialog {
+public class NewSubjectView extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2986772578238274359L;
 
-	private JLabel indicationLabel = new JLabel("Choose a pseudo");
+	private JLabel indicationLabel = new JLabel("Choose a title for your new subject");
 	private JLabel messageLabel = new JLabel();
-	private JTextField pseudoField = new JTextField();
+	private JTextField titleField = new JTextField();
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel panel = new JPanel();
 	private JButton validateButton = new JButton("Valider");
-	private ImageIcon validateIcon = new ImageIcon("img/badge_32.png");
+//	private ImageIcon validateIcon = new ImageIcon("img/badge_32.png");
 	private Color redColor = new Color(255, 55, 63);
 
 	private Action sendLogin = new ActionSend(this);
@@ -47,9 +47,9 @@ public class LoginView extends JDialog {
 		 * 
 		 */
 		private static final long serialVersionUID = -185704272279549730L;
-		private LoginView source ;
+		private NewSubjectView source ;
 
-		public ActionSend(LoginView source){
+		public ActionSend(NewSubjectView source){
 			this.source = source;
 		}
 
@@ -60,7 +60,7 @@ public class LoginView extends JDialog {
 
 	private MainWindowClient parent;
 
-	public LoginView(JFrame parent, boolean modal){
+	public NewSubjectView(JFrame parent, boolean modal){
 		super(parent, modal);
 		this.parent = (MainWindowClient) parent;
 		panel.setLayout(new GridBagLayout());
@@ -85,10 +85,10 @@ public class LoginView extends JDialog {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.CENTER; // Position
 		gbc.insets = new Insets(5, 10, 5, 10);
-		pseudoField.addKeyListener(new PseudoKeyListener());
-		pseudoField.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "sendLogin");
-		pseudoField.getActionMap().put("sendLogin", sendLogin);
-		panel.add(pseudoField,gbc);
+		titleField.addKeyListener(new PseudoKeyListener());
+		titleField.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "sendLogin");
+		titleField.getActionMap().put("sendLogin", sendLogin);
+		panel.add(titleField,gbc);
 		/* Message error */
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -111,7 +111,7 @@ public class LoginView extends JDialog {
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(5, 10, 10, 10);
-		validateButton.setIcon(validateIcon);
+//		validateButton.setIcon(validateIcon);
 		validateButton.addActionListener(new ValidateButtonListener(this));
 		panel.add(validateButton, gbc);
 
@@ -124,9 +124,9 @@ public class LoginView extends JDialog {
 
 	private class ValidateButtonListener implements ActionListener {
 
-		private LoginView source;
+		private NewSubjectView source;
 
-		public ValidateButtonListener(LoginView source) {
+		public ValidateButtonListener(NewSubjectView source) {
 			this.source = source;
 		}
 
@@ -161,21 +161,26 @@ public class LoginView extends JDialog {
 	 * Send the login source to the server
 	 * @param source
 	 */
-	private void sendLogin(LoginView source){
+	private void sendLogin(NewSubjectView source){
 		boolean dispo = false;
 		try {
-			dispo = parent.getController().verifyAvailableLogin(pseudoField.getText()); 
+			dispo = parent.getController().verifyAvailableTitle(titleField.getText()); 
 		} catch (RemoteException e1) {
 			e1.printStackTrace();
-			displayError("Impossible d'acceder au server pour verifier la disponibilite du pseudo. \nVeuillez recommencer ulterieurement");
+			displayError("Impossible d'acceder au server pour verifier la disponibilite du titre. \nVeuillez recommencer ulterieurement");
 		}
 		if (dispo){
-			parent.setPseudo(pseudoField.getText());
-			source.dispose(); // Close windows
+			try {
+				parent.getController().addSubjectDiscussion(titleField.getText());
+				source.dispose(); // Close windows
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				displayError("Impossible d'acceder au server pour ajouter le sujet. \nVeuillez recommencer ulterieurement");
+			}
 		}
 		else {
-			messageLabel.setText("Pseudo " + pseudoField.getText() + " already use. Please choose another");
-			pseudoField.setText("");
+			messageLabel.setText("Title " + titleField.getText() + " already use. Please choose another");
+			titleField.setText("");
 		}
 	}
 

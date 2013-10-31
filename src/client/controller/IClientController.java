@@ -56,4 +56,17 @@ public interface IClientController{
 	 */
 	public void pleaseRemoveLogin(String login) throws RemoteException;
 
+	/**
+	 * Send a request to server to know if the title is available
+	 * @param title
+	 * @throws RemoteException
+	 */
+	public boolean verifyAvailableTitle(String title) throws RemoteException;
+	
+	/**
+	 * Create new Subject
+	 * @param title
+	 * @throws RemoteException
+	 */
+	public void addSubjectDiscussion(String title) throws RemoteException;
 }

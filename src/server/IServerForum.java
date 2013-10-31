@@ -61,4 +61,11 @@ public interface IServerForum extends Remote {
 	 */
 	public ArrayList<String> sendSubjects() throws RemoteException;
 
+	/**
+	 * Define if the title is available
+	 * @param title
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean verifyAvailableTitle(String title) throws RemoteException;
 }
