@@ -6,8 +6,9 @@ package client.model;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import client.controller.IClientController;
+import provider.ISubjectProvider;
 import server.ISubjectDiscussion;
+import client.controller.IClientController;
 
 
 /**
@@ -41,19 +42,19 @@ public class Client extends UnicastRemoteObject implements IClient {
 
 
 	@Override
-	public boolean pleaseSubscribe( ISubjectDiscussion subject ) throws RemoteException {
-		return subject.registration( this ); 
+	public boolean pleaseSubscribe( ISubjectProvider subjectProvider ) throws RemoteException {
+		return subjectProvider.subscribe(this); 
 	}
 	
 	@Override
-	public boolean pleaseUnsubscribe( ISubjectDiscussion subject ) throws RemoteException {
+	public boolean pleaseUnsubscribe( ISubjectProvider subjectProvider ) throws RemoteException {
 		System.out.println("appel in client");
-		return subject.unsubscribe(this); 
+		return subjectProvider.unsubscribe(this); 
 	}
 	
 	@Override
-	public void pleaseSendMessage( ISubjectDiscussion subject, String msg ) throws RemoteException {
-		 subject.broadcast(msg);
+	public void pleaseSendMessage( ISubjectProvider subjectProvider, String msg ) throws RemoteException {
+		 subjectProvider.broadcast(msg);
 	}
 	
 	@Override

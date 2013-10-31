@@ -18,8 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import provider.ISubjectProvider;
 import server.IServerForum;
-import server.ISubjectDiscussion;
+//import server.ISubjectDiscussion;
 import client.controller.ClientController;
 import client.controller.IClientController;
 import client.model.Client;
@@ -40,29 +41,33 @@ public class MainWindowClient extends JFrame {
 
 	private IClientController controller;
 	private IClient client;
-	private static List<ISubjectDiscussion> listSubject = new ArrayList<ISubjectDiscussion>();
+//	private static List<ISubjectDiscussion> listSubject = new ArrayList<ISubjectDiscussion>();
 
 	private JButton buttonSubject;
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
 	private JPanel panel = new JPanel();
 	private ImageIcon iconWindow = new ImageIcon("img/speech-bubble_32.png");
 	private String pseudo;
+	private IServerForum chatServer;
 
 	public MainWindowClient(IServerForum chatServer) throws RemoteException {
-
+		this.chatServer = chatServer;
 		this.controller = new ClientController(this, chatServer);
 
 		new LoginView(this, true);
 
 		this.client = new Client(controller, this.pseudo);
 
-		int nbSujets = chatServer.nbSujets();
-		for ( int i = 0 ; i < nbSujets ; i++ ) {
-			ISubjectDiscussion sujet = chatServer.sendSubject( i ); 
-			System.out.println( sujet.getTitle() ); 
-			listSubject.add( sujet );
-			buttonSubject = new JButton( sujet.getTitle() );
-			buttonSubject.addActionListener( new ButtonSubscribeListener( sujet ) ); 
+//		int nbSujets = chatServer.nbSujets();
+		ArrayList<String> subjects = this.chatServer.sendSubjects();
+		for (String s : subjects){
+			
+//		for ( int i = 0 ; i < nbSujets ; i++ ) {
+//			ISubjectDiscussion sujet = chatServer.sendSubject( i ); 
+//			System.out.println( sujet.getTitle() ); 
+//			listSubject.add( sujet );
+			buttonSubject = new JButton( /*sujet.getTitle()*/s );
+			buttonSubject.addActionListener( new ButtonSubscribeListener( /*sujet*/s ) ); 
 			panel.add(buttonSubject);
 			listButtonSubject.add(buttonSubject);
 		}
@@ -108,16 +113,19 @@ public class MainWindowClient extends JFrame {
 
 	private class ButtonSubscribeListener implements ActionListener {
 
-		private ISubjectDiscussion subject; 
+//		private ISubjectDiscussion subject; 
+		private String title;
 
-		public ButtonSubscribeListener( ISubjectDiscussion subject ) {
-			this.subject = subject; 
+		public ButtonSubscribeListener( /*ISubjectDiscussion subject*/String title ) {
+//			this.subject = subject;
+			this.title = title;
 		}
 
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			try {
-				controller.pleaseSubscribe( subject, client );
+				ISubjectProvider subjectProvider = chatServer.getSubject(title);
+				controller.pleaseSubscribe( subjectProvider, client );
 				((AbstractButton) e.getSource()).setEnabled(false);
 			} catch( RemoteException e1 ) {
 				e1.printStackTrace();

@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-import server.ISubjectDiscussion;
+import provider.ISubjectProvider;
 import client.controller.IClientController;
 import client.model.IClient;
 
@@ -66,16 +66,16 @@ public class SubjectView extends JFrame {
 
 	private IClientController controller;
 	private IClient client;
-	private ISubjectDiscussion subject; 
+	private ISubjectProvider subjectProvider; 
 	private String title; 
 	private String pseudo; 
 
-	public SubjectView( ISubjectDiscussion subject, IClientController controller, IClient client ){
-		this.subject = subject; 
+	public SubjectView( ISubjectProvider subjectProvider, IClientController controller, IClient client ){
+		this.subjectProvider = subjectProvider;
 		this.client = client;
 
 		try {
-			this.title = subject.getTitle();
+			this.title = subjectProvider.getSubject().getTitle();
 			this.pseudo = client.getLogin();
 		} catch( RemoteException e ) {
 			this.title = ""; 
@@ -208,7 +208,7 @@ public class SubjectView extends JFrame {
 			int result = JOptionPane.showConfirmDialog(frame, "Are you sure?", "Exit subject discussion", JOptionPane.YES_NO_OPTION );
 			if (result == JOptionPane.YES_OPTION) {
 				try {
-					controller.pleaseUnsubscribe(subject, client);
+					controller.pleaseUnsubscribe(subjectProvider, client);
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				} catch (RemoteException e1) {
 					e1.printStackTrace();
@@ -223,7 +223,7 @@ public class SubjectView extends JFrame {
 	 */
 	private void sendMessage(){
 		try {
-			controller.pleaseSendMessage( subject, "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - " + pseudo + " : " + newMessageArea.getText() + "\n", client);
+			controller.pleaseSendMessage( subjectProvider, "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - " + pseudo + " : " + newMessageArea.getText() + "\n", client);
 			newMessageArea.setText( "" );
 		} catch (RemoteException e) {
 			e.printStackTrace();

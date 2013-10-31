@@ -7,11 +7,13 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
+import provider.ISubjectProvider;
+import server.IServerForum;
+import server.ISubjectDiscussion;
+import server.SubjectDiscussion;
 import client.model.IClient;
 import client.view.MainWindowClient;
 import client.view.SubjectView;
-import server.IServerForum;
-import server.ISubjectDiscussion;
 
 
 /**
@@ -31,24 +33,24 @@ public class ClientController implements IClientController {
 	}
 
 	@Override
-	public void pleaseSubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException {
+	public void pleaseSubscribe( ISubjectProvider subjectProvider, IClient client ) throws RemoteException {
 		// TODO Add JProgress bar en attendant que connexion soit OK ?
-		if ( client.pleaseSubscribe( subject ) ) {
-			mapsv.put( subject, new SubjectView( subject, this, client ) ); 
+		if ( client.pleaseSubscribe( subjectProvider ) ) {
+			mapsv.put( /*subject*/ subjectProvider.getSubject(), new SubjectView( subjectProvider, this, client ) ); 
 		}
 	}
 
 	@Override
-	public void pleaseUnsubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException { 
-		if ( client.pleaseUnsubscribe(subject)) {
-			mapsv.remove( subject ); 
+	public void pleaseUnsubscribe( ISubjectProvider subjectProvider, IClient client ) throws RemoteException { 
+		if ( client.pleaseUnsubscribe(subjectProvider)) {
+			mapsv.remove( subjectProvider ); 
 		}
-		mainWindowClient.activeButton(subject.getTitle());
+		mainWindowClient.activeButton(subjectProvider.getSubject().getTitle());
 	}
 
 	@Override
-	public void pleaseSendMessage( ISubjectDiscussion subject, String msg, IClient client ) throws RemoteException {
-		client.pleaseSendMessage(subject, msg);
+	public void pleaseSendMessage( ISubjectProvider subjectProvider, String msg, IClient client ) throws RemoteException {
+		client.pleaseSendMessage(subjectProvider, msg);
 	}
 
 	@Override

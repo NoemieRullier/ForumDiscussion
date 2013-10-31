@@ -3,7 +3,11 @@ package server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import provider.ISubjectProvider;
+import provider.SubjectProvider;
 
 public class ServerForum extends UnicastRemoteObject implements IServerForum {
 
@@ -13,50 +17,54 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 	 */
 	private static final long serialVersionUID = -6843509051426878264L;
 
-	private List<ISubjectDiscussion> listSubject;
+//	private List<ISubjectDiscussion> listSubject;
+	private HashMap<String,ISubjectProvider> listProvider;
 	private List<String> pseudosUsed;
 	private final Object listPseudoMonitor = new Object(); // Protects "pseudosUsed"
 
 	public ServerForum() throws RemoteException {
-		listSubject = new ArrayList<ISubjectDiscussion>();
+		listProvider = new HashMap<String, ISubjectProvider>();
+//		listSubject = new ArrayList<ISubjectDiscussion>();
 		pseudosUsed = new ArrayList<String>();
-		addSubjectDiscussion("Cinema");
-		addSubjectDiscussion("Gymnastique");
-		addSubjectDiscussion("Radio");
+		
+		//addSubjectDiscussion("Cinema");
+		//addSubjectDiscussion("Gymnastique");
+		//addSubjectDiscussion("Radio");
+	}
+	
+	public void initializeSubjects() throws RemoteException{
+		listProvider.put("Cinema", new SubjectProvider("Cinema"));
+		listProvider.put("Gymnastique", new SubjectProvider("Gymnastique"));
+		listProvider.put("Radio", new SubjectProvider("Radio"));
 	}
 
 	@Override
-	public ISubjectDiscussion sendSubject( int pos ) throws RemoteException {
-		return listSubject.get( pos ); 
+	public ArrayList<String> sendSubjects() throws RemoteException {
+		ArrayList<String> result = new ArrayList<String>();
+		result.addAll(listProvider.keySet());
+		return result;
 	}
 
 	@Override
 	public int nbSujets() throws RemoteException {
-		return listSubject.size(); 
+		return listProvider.size(); 
 	}
 
 	@Override
-	public ISubjectDiscussion getSubject( String title ) throws RemoteException {
-		ISubjectDiscussion subject = null;
-		for ( ISubjectDiscussion s : listSubject ){
-			if ( s.getTitle().equals( title ) ){
-				subject = s;
-			}
-		}
-		return subject;
+	public ISubjectProvider getSubject( String title ) throws RemoteException {
+		ISubjectProvider subjectProvider = listProvider.get(title);
+		return subjectProvider;
 	}
 
 	@Override
 	public boolean addSubjectDiscussion(String title) throws RemoteException {
 		boolean bFree = true; 
-		for (ISubjectDiscussion s : listSubject){
-			if (s.getTitle().equals(title)){
-				bFree = false;
-			}
+		if (this.listProvider.containsKey(title)){
+			bFree = false;
 		}
 		if ( bFree ) {
-			ISubjectDiscussion subj = new SubjectDiscussion(title);
-			this.listSubject.add(subj);
+			ISubjectProvider subj = new SubjectProvider(title);
+			this.listProvider.put(title, subj);
 		}
 		return bFree;
 	}

@@ -2,16 +2,19 @@ package server;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+import provider.ISubjectProvider;
 
 public interface IServerForum extends Remote {
 
 	/**
-	 * Get the subject associate at the title
+	 * Get the subjectProvider associate at the title
 	 * @param title
-	 * @return The SubjectDiscussion corresponding to title or null if subject doesn't exist
+	 * @return The SubjectProvider corresponding to title or null if subject doesn't exist
 	 * @throws RemoteException
 	 */
-	public ISubjectDiscussion getSubject(String title) throws RemoteException;
+	public ISubjectProvider getSubject(String title) throws RemoteException;
 
 	/**
 	 * Add a new subject on the sever
@@ -35,7 +38,7 @@ public interface IServerForum extends Remote {
 	 * @return The SubjectDiscussion corresponding to the pos in the list of subjects
 	 * @throws RemoteException
 	 */
-	public ISubjectDiscussion sendSubject( int pos ) throws RemoteException;
+//	public ISubjectDiscussion sendSubject( int pos ) throws RemoteException;
 
 	/**
 	 * Define if the pseudo is available
@@ -51,5 +54,12 @@ public interface IServerForum extends Remote {
 	 * @throws RemoteException
 	 */
 	public void removeLogin(String login) throws RemoteException;
+
+	/**
+	 * Send the list of subject's title
+	 * @return
+	 * @throws RemoteException
+	 */
+	public ArrayList<String> sendSubjects() throws RemoteException;
 
 }

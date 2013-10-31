@@ -22,6 +22,7 @@ public class MainServer {
 			String serverAddress = "//"+ InetAddress.getLocalHost().getHostAddress() +":1099/ServerForum";
 			Naming.rebind(serverAddress, server);
 			System.out.println("Server start !");
+			server.initializeSubjects();
 		}
 		catch (MalformedURLException e){
 			e.printStackTrace();

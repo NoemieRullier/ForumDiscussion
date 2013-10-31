@@ -3,6 +3,7 @@ package client.model;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import provider.ISubjectProvider;
 import server.ISubjectDiscussion;
 
 public interface IClient  extends Remote {
@@ -27,7 +28,7 @@ public interface IClient  extends Remote {
 	 * @return true if is subscribe, false otherwise
 	 * @throws RemoteException
 	 */
-	public boolean pleaseSubscribe( ISubjectDiscussion subject ) throws RemoteException;
+	public boolean pleaseSubscribe( ISubjectProvider subject ) throws RemoteException;
 	
 	/**
 	 * Send a request to unsubscribe the client
@@ -35,7 +36,7 @@ public interface IClient  extends Remote {
 	 * @return true if is subscribe, false otherwise
 	 * @throws RemoteException
 	 */
-	public boolean pleaseUnsubscribe( ISubjectDiscussion subject ) throws RemoteException;
+	public boolean pleaseUnsubscribe( ISubjectProvider subjectProvider ) throws RemoteException;
 	
 	/**
 	 * Ask the server to send the message
@@ -43,7 +44,7 @@ public interface IClient  extends Remote {
 	 * @param msg
 	 * @throws RemoteException
 	 */
-	public void pleaseSendMessage( ISubjectDiscussion subject, String msg ) throws RemoteException;
+	public void pleaseSendMessage( ISubjectProvider subjectProvider, String msg ) throws RemoteException;
 	
 	/**
 	 * Display the message on Client's view

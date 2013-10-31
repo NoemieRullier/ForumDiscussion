@@ -2,6 +2,7 @@ package client.controller;
 
 import java.rmi.RemoteException;
 
+import provider.ISubjectProvider;
 import server.ISubjectDiscussion;
 import client.model.IClient;
 
@@ -13,7 +14,7 @@ public interface IClientController{
 	 * @param client
 	 * @throws RemoteException
 	 */
-	public void pleaseSubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException; 
+	public void pleaseSubscribe( ISubjectProvider subject, IClient client ) throws RemoteException; 
 
 	/**
 	 * Display the message msg on the subject
@@ -29,7 +30,7 @@ public interface IClientController{
 	 * @param client
 	 * @throws RemoteException
 	 */
-	public void pleaseUnsubscribe(ISubjectDiscussion subject, IClient client) throws RemoteException;
+	public void pleaseUnsubscribe(ISubjectProvider subjectProvider, IClient client) throws RemoteException;
 
 	/**
 	 * Send a request to client to send the message msg on the subject subject
@@ -38,7 +39,7 @@ public interface IClientController{
 	 * @param client
 	 * @throws RemoteException
 	 */
-	public void pleaseSendMessage(ISubjectDiscussion subject, String msg, IClient client) throws RemoteException;
+	public void pleaseSendMessage(ISubjectProvider subject, String msg, IClient client) throws RemoteException;
 
 	/**
 	 * Send a request to server to know if the login is available
