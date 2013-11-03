@@ -1,8 +1,8 @@
-1) Ajouter la possibilite aux clients de creer des sujet comment faire pour que les autres clients soient notifies et que le sujet apparaissent
+1) Ajouter la possibilite aux clients de creer des sujet ; comment faire pour que les autres clients soient notifies et que le sujet apparaissent
 	|-> Synchronized pour l'acces a la liste des sujet ?
 2) Possibilite de supprimer un sujet ? Que fait-on de ceux connecte actuellement, Qui peux les supprimer
 
-3) Quand le server est arrete pdt que des clients sont connectes --> Une fois celui-ci redemarrer ca fout la merde ! Impossible de rejoidre le server
+3) Quand le server est arrete pdt que des clients sont connectes --> Une fois celui-ci redemarre ca fout la merde ! Impossible de rejoidre le server
 
 Si le temps:
 - Cmd+Q -> Doit aussi appeler desabonner
