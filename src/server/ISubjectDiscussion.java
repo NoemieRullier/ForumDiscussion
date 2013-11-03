@@ -16,12 +16,12 @@ public interface ISubjectDiscussion extends Remote {
 	public boolean registration (IClient c) throws RemoteException;
 
 	/**
-	 * Broadcast the message msg to all client register
+	 * Broadcast the message msg to registered clients 
 	 * @param msg
 	 * @throws RemoteException
 	 */
 	public void broadcast(String msg) throws RemoteException;
-
+	
 	/**
 	 * Get the title of this subject discussion
 	 * @return title
@@ -36,6 +36,16 @@ public interface ISubjectDiscussion extends Remote {
 	 * @throws RemoteException
 	 */
 	public boolean unsubscribe(IClient c) throws RemoteException;
+	
+	/**
+	 * Unsubscribe every client 
+	 * @return int # == 0 if nobody has been unsubscribed, 
+	 * 	# > 0 otherwise 
+	 * 	# == the number of unsubscribed clients 
+	 * @throws RemoteException
+	 */
+	public int unsubscribeEveryone() throws RemoteException;
 
+	
 
 }

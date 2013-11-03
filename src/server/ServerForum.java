@@ -60,6 +60,25 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 		}
 		return bFree;
 	}
+	
+	@Override
+	public boolean removeSubjectDiscussion( String title ) throws RemoteException {
+		boolean bRemoved = false; 
+		int i = 0; 
+		List<ISubjectDiscussion> tempListSubject = new ArrayList<ISubjectDiscussion>( this.listSubject ); 
+		while ( !bRemoved && ( i < tempListSubject.size() ) ) {
+			ISubjectDiscussion s = tempListSubject.get( i ); 
+			// begin subject destruction sequence 
+			if ( s.getTitle().equals( title ) ){ // remove only if the title matches the current list entry 
+				this.listSubject.get( i ).unsubscribeEveryone(); // we unsubscribed everyone BEFORE removing everyone (safe) 
+				this.listSubject.remove( i ); 
+				bRemoved = true;
+			}
+			// end subject destruction sequence 
+			i++; 
+		}
+		return bRemoved;
+	}
 
 	@Override
 	public boolean pseudoAvailable(String pseudo) throws RemoteException {
@@ -72,6 +91,7 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 			}
 			if ( bFree ) {
 				this.pseudosUsed.add(pseudo);
+				System.out.println(this.getClass().getName() + ": " + pseudo + " is now registered ");
 			}
 		}
 		return bFree;
@@ -88,7 +108,7 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 			}
 			if ( bFree ) {
 				this.pseudosUsed.remove(login);
-				System.out.println(login + " was unsubscribe ");
+				System.out.println(this.getClass().getName() + ": " + login + " deregistered ");
 			}
 		}
 	}

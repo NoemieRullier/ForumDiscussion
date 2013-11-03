@@ -21,6 +21,13 @@ public interface IServerForum extends Remote {
 	 */
 	public boolean addSubjectDiscussion(String title) throws RemoteException; 
 
+	/**
+	 * Remove a subject from the server-side list of available subjects or fails by doing nothing 
+	 * @param String title, title of the subject to remove from the list 
+	 * @return true if the removal was successful, false if nothing changed (safe) 
+	 * @throws RemoteException
+	 */
+	public boolean removeSubjectDiscussion( String title ) throws RemoteException;
 
 	/**
 	 * Get number of subjects save on server 

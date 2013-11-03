@@ -32,7 +32,9 @@ public class ClientController implements IClientController {
 
 	@Override
 	public void pleaseSubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException {
-		// TODO Add JProgress bar en attendant que connexion soit OK ?
+		// TODO > Add JProgress bar en attendant que connexion soit OK ? 
+		// 	In an async context, we can't have an accurate ETA, 
+		// 	a loading animation loop could be better than a progress bar ;) 
 		if ( client.pleaseSubscribe( subject ) ) {
 			mapsv.put( subject, new SubjectView( subject, this, client ) ); 
 		}
@@ -40,10 +42,15 @@ public class ClientController implements IClientController {
 
 	@Override
 	public void pleaseUnsubscribe( ISubjectDiscussion subject, IClient client ) throws RemoteException { 
-		if ( client.pleaseUnsubscribe(subject)) {
+		if ( client.pleaseUnsubscribe(subject) ) {
 			mapsv.remove( subject ); 
 		}
 		mainWindowClient.activeButton(subject.getTitle());
+	}
+	
+	@Override
+	public void pleaseRemoveSubject( ISubjectDiscussion subject, IClient client, IServerForum server ) throws RemoteException { 
+		client.pleaseRemoveSubject( server, subject.getTitle() );
 	}
 
 	@Override

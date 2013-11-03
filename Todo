@@ -1,13 +1,13 @@
-1) Ajouter la possibilit aux clients de crer des sujet comment faire pour que les autres clients soient notifi et que le sujet apparaissent
-	|-> Synchronized pour l'accs ˆ la liste des sujet ?
-2) Possibilit de supprimer un sujet ? Que fait-on de ceux connect actuellement, Qui peux les supprimer
+1) Ajouter la possibilite aux clients de creer des sujet comment faire pour que les autres clients soient notifies et que le sujet apparaissent
+	|-> Synchronized pour l'acces a la liste des sujet ?
+2) Possibilite de supprimer un sujet ? Que fait-on de ceux connecte actuellement, Qui peux les supprimer
 
-3) Quand le server est arreter pdt que des clients sont connect --> Une fois celuici redmarrer a fout la merde ! Impossible de rejoidre le server
+3) Quand le server est arrete pdt que des clients sont connectes --> Une fois celui-ci redemarrer ca fout la merde ! Impossible de rejoidre le server
 
 Si le temps:
-- Cmd+Q -> Doit aussi appeler dsabonner
+- Cmd+Q -> Doit aussi appeler desabonner
 - Revoir interface de la windows principal
 - Voir pour un historique des message -> Lors de la connexion d'un nouveaux membre on lui affiche les combien derniers ? Ou on lui demande s'il veut charger l'historique ?
-- Mettre animation tournante le temps de charger les fentre de discussion car accs seulement si personnes n'crit ?
-- Ajouter les autres envoyeurs dans une autre couleur (choix de la couleur par l'utilisateur lui et les autres) + Pourquoi pas ajouter le nombre de personnes connecte sur le chat
-- Voir si on interdit des caractre dans le login -> Pour le moment espace enlev | Mettre taille limite 
+- Mettre animation tournante le temps de charger les fenetre de discussion car acces seulement si personnes n'ecrit ?
+- Ajouter les autres envoyeurs dans une autre couleur (choix de la couleur par l'utilisateur lui et les autres) + Pourquoi pas ajouter le nombre de personnes connectee sur le chat
+- Voir si on interdit des caractere dans le login -> Pour le moment espace enleve | Mettre taille limite 

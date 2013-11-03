@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import client.controller.IClientController;
+import server.IServerForum;
 import server.ISubjectDiscussion;
 
 
@@ -42,12 +43,13 @@ public class Client extends UnicastRemoteObject implements IClient {
 
 	@Override
 	public boolean pleaseSubscribe( ISubjectDiscussion subject ) throws RemoteException {
+		System.out.println( this.getClass().getName() + ": Please, subscribe me to \"" + subject.getTitle() + "\"." ); 
 		return subject.registration( this ); 
 	}
 	
 	@Override
 	public boolean pleaseUnsubscribe( ISubjectDiscussion subject ) throws RemoteException {
-		System.out.println("appel in client");
+		System.out.println( this.getClass().getName() + ": Please, unsubscribe me from \"" + subject.getTitle() + "\"." ); 
 		return subject.unsubscribe(this); 
 	}
 	
@@ -63,7 +65,13 @@ public class Client extends UnicastRemoteObject implements IClient {
 	
 	@Override
 	public boolean equals(IClient client) throws RemoteException{
-		return (this.login.equals(client.getLogin()));
+		return ( this.login.equals( client.getLogin() ) );
+	}
+
+
+	@Override
+	public boolean pleaseRemoveSubject( IServerForum server, String title ) throws RemoteException {
+		return server.removeSubjectDiscussion( title );
 	}
 	
 }

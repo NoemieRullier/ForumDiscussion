@@ -2,6 +2,7 @@ package client.controller;
 
 import java.rmi.RemoteException;
 
+import server.IServerForum;
 import server.ISubjectDiscussion;
 import client.model.IClient;
 
@@ -54,5 +55,14 @@ public interface IClientController{
 	 * @throws RemoteException
 	 */
 	public void pleaseRemoveLogin(String login) throws RemoteException;
+
+	/**
+	 * Send a request to server to remove a subject
+	 * @param ISubjectDiscussion subject is the subject to remove
+	 * @param IClient client is the one asking for subject removal (TODO implement RBAC, default: everyone has all rights) 
+	 * @param IServerForum server is the host of the subject 
+	 * @throws RemoteException
+	 */
+	public void pleaseRemoveSubject( ISubjectDiscussion subject, IClient client, IServerForum server ) throws RemoteException;
 
 }

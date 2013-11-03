@@ -40,15 +40,20 @@ public class MainWindowClient extends JFrame {
 
 	private IClientController controller;
 	private IClient client;
+	private IServerForum chatServer; 
 	private static List<ISubjectDiscussion> listSubject = new ArrayList<ISubjectDiscussion>();
 
 	private JButton buttonSubject;
+	private JButton buttonSubjectRemove;
+	private ImageIcon iconRemoveItem = new ImageIcon("img/remove_item_001.png"); 
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
 	private JPanel panel = new JPanel();
 	private ImageIcon iconWindow = new ImageIcon("img/speech-bubble_32.png");
 	private String pseudo;
 
 	public MainWindowClient(IServerForum chatServer) throws RemoteException {
+		
+		this.chatServer = chatServer; 
 
 		this.controller = new ClientController(this, chatServer);
 
@@ -56,15 +61,21 @@ public class MainWindowClient extends JFrame {
 
 		this.client = new Client(controller, this.pseudo);
 
+		System.out.println( this.getClass().getName() + ": Subject list from remote " + chatServer.getClass().getName() + ": " );
+		
 		int nbSujets = chatServer.nbSujets();
 		for ( int i = 0 ; i < nbSujets ; i++ ) {
 			ISubjectDiscussion sujet = chatServer.sendSubject( i ); 
-			System.out.println( sujet.getTitle() ); 
+			System.out.println( this.getClass().getName() + ": \t - " + sujet.getTitle() ); 
 			listSubject.add( sujet );
 			buttonSubject = new JButton( sujet.getTitle() );
+			buttonSubjectRemove = new JButton( iconRemoveItem ); 
 			buttonSubject.addActionListener( new ButtonSubscribeListener( sujet ) ); 
+			buttonSubjectRemove.addActionListener( new ButtonSubjectRemoveListener( sujet ) ); 
 			panel.add(buttonSubject);
+			panel.add(buttonSubjectRemove);
 			listButtonSubject.add(buttonSubject);
+			listButtonSubject.add(buttonSubjectRemove);
 		}
 
 		this.setTitle( "Bienvenue " + pseudo);
@@ -122,6 +133,26 @@ public class MainWindowClient extends JFrame {
 			} catch( RemoteException e1 ) {
 				e1.printStackTrace();
 				displayError("Impossible d'acceder au server pour vous connecter au sujet. \nVeuillez recommencer ulterieurement");
+			} 
+		}
+	}
+	
+	private class ButtonSubjectRemoveListener implements ActionListener {
+
+		private ISubjectDiscussion subject; 
+
+		public ButtonSubjectRemoveListener( ISubjectDiscussion subject ) {
+			this.subject = subject; 
+		}
+
+		@Override
+		public void actionPerformed( ActionEvent e ) {
+			try {
+				controller.pleaseRemoveSubject( subject, client, chatServer );
+				((AbstractButton) e.getSource()).setEnabled(false);
+			} catch( RemoteException e1 ) {
+				e1.printStackTrace();
+				displayError("Impossible d'acceder au server pour supprimer le sujet. \nVeuillez recommencer ulterieurement");
 			} 
 		}
 	}
