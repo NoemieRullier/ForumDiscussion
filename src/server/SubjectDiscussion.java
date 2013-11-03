@@ -50,6 +50,10 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 			}
 			if ( bFree ) {
 				this.listClient.add(c);
+				System.out.println( 
+					this.getClass().getName() + ": " + 
+					c.getLogin() + " subscribed to " + this.title 
+				);
 			}
 		}
 		return bFree; 
@@ -66,19 +70,33 @@ public class SubjectDiscussion extends UnicastRemoteObject implements ISubjectDi
 			}
 			if ( bFree ) {
 				this.listClient.remove(c);
-				System.out.println(c.getLogin() + " was unsubscribe ");
+				System.out.println( 
+					this.getClass().getName() + ": " + 
+					c.getLogin() + " unsubscribed to " + this.title 
+				);
 			}
 		}
 		return bFree;
 	}
+	
+	@Override
+	public boolean unsubscribeAll() throws RemoteException {
+		synchronized (listClientMonitor) {
+			this.listClient = new ArrayList<IClient>(); 
+		}
+		return this.listClient.isEmpty(); 
+	}
 
 	@Override
 	public void broadcast(String msg) throws RemoteException {
-		System.out.println( "List of clients subscribe:" );
+		System.out.println( this.getClass().getName() + ": New message broadcast... " );
 		synchronized (listClientMonitor) {
 			for (IClient dc : listClient){
 				dc.displayMessage( this, msg);
-				System.out.println( dc.getLogin() + " : " + msg );
+				System.out.println( 
+					this.getClass().getName() + 
+					": Hey " + dc.getLogin() + "! You have a new message here at " + this.title + ": \"" + msg + "\"" 
+				);
 			}
 		}
 	}

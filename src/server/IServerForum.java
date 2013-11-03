@@ -25,7 +25,14 @@ public interface IServerForum extends Remote {
 	 */
 	public boolean addSubjectDiscussion(String title) throws RemoteException;
 
-
+	/**
+	 * Remove a subject by title 
+	 * @param String title the title of the subject to remove 
+	 * @return true if the subject have been removed, false if nothing changed (safe) 
+	 * @throws RemoteException
+	 */
+	public boolean removeSubjectDiscussion( String title ) throws RemoteException;
+	
 	/**
 	 * Get number of subjects save on server 
 	 * @return Number of subjects
@@ -77,4 +84,7 @@ public interface IServerForum extends Remote {
 	 * @throws RemoteException
 	 */
 	public void addClient(String pseudo, IClient client) throws RemoteException;
+
+	
+	
 }

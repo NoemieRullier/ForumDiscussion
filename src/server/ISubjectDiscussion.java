@@ -37,5 +37,12 @@ public interface ISubjectDiscussion extends Remote {
 	 */
 	public boolean unsubscribe(IClient c) throws RemoteException;
 
+	/**
+	 * Unsubscribe all clients to this subject
+	 * @param client
+	 * @return 
+	 * @throws RemoteException
+	 */
+	public boolean unsubscribeAll() throws RemoteException;
 
 }

@@ -50,6 +50,7 @@ public class MainWindowClient extends JFrame {
 	private IClient client;
 
 	private JButton buttonSubject;
+	private JButton buttonRemoveSubject; 
 	private List<JButton> listButtonSubject = new ArrayList<JButton>();
 	private JPanel panel = new JPanel();
 	private ImageIcon iconWindow = new ImageIcon("img/speech-bubble_32.png");
@@ -181,6 +182,26 @@ public class MainWindowClient extends JFrame {
 			} 
 		}
 	}
+	
+	private class ButtonRemoveSubjectListener implements ActionListener {
+
+		private String title;
+
+		public ButtonRemoveSubjectListener( String title ) {
+			this.title = title;
+		}
+
+		@Override
+		public void actionPerformed( ActionEvent e ) {
+			try {
+				controller.pleaseRemoveSubject( client, this.title ); 
+				((AbstractButton) e.getSource()).setEnabled(false);
+			} catch( RemoteException e1 ) {
+				e1.printStackTrace();
+				displayError("Impossible d'acceder au server pour supprimer le sujet. \nVeuillez recommencer ulterieurement");
+			} 
+		}
+	}
 
 	private class MainWindowAdapter extends WindowAdapter {
 
@@ -230,13 +251,17 @@ public class MainWindowClient extends JFrame {
 			int nbSubjectsByLine = 5;
 			listButton.setLayout(new GridLayout(nbSubjects/nbSubjectsByLine+1,nbSubjectsByLine));
 //			listButton.setBackground(new Color(240, 109, 158));
-			System.out.println("on passe recherche boutons " + nbSubjects);
+			System.out.println( this.getClass().getName() + ": Il y a actuellement " + nbSubjects + " sujets: "); 
 			for (String s : subjects){
-				System.out.println(s);
+				System.out.println(  this.getClass().getName() + ": \t - " + s ); 
 				buttonSubject = new JButton(s);
+				buttonRemoveSubject = new JButton( "X" ); 
 				buttonSubject.addActionListener(new ButtonSubscribeListener(s)); 
+				buttonRemoveSubject.addActionListener( new ButtonRemoveSubjectListener( s ) ); 
 				listButton.add(buttonSubject);
+				listButton.add(buttonRemoveSubject);
 				listButtonSubject.add(buttonSubject);
+				listButtonSubject.add(buttonRemoveSubject);
 			}
 			gbc.gridx = 0;
 			gbc.gridy = 2;

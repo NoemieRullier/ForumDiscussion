@@ -14,14 +14,14 @@ public class MainServer {
 			LocateRegistry.createRegistry(1099);
 		}
 		catch (Exception e){
-			System.out.println("Port already use");
+			System.out.println( new Object(){}.getClass().getEnclosingClass().getName() + ": <ERROR>[1] Port already in use"); 
 		}
 		try {
 			ServerForum server = new ServerForum();
 //			String serverAddress = "//192.168.137.1:1099/ServerForum"; 
 			String serverAddress = "//"+ InetAddress.getLocalHost().getHostAddress() +":1099/ServerForum";
 			Naming.rebind(serverAddress, server);
-			System.out.println("Server start !");
+			System.out.println( new Object(){}.getClass().getEnclosingClass().getName() + ": <OK> Server ready at " + serverAddress );
 			server.initializeSubjects();
 		}
 		catch (MalformedURLException e){

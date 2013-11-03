@@ -48,7 +48,6 @@ public class Client extends UnicastRemoteObject implements IClient {
 	
 	@Override
 	public boolean pleaseUnsubscribe( ISubjectProvider subjectProvider ) throws RemoteException {
-		System.out.println("appel in client");
 		return subjectProvider.unsubscribe(this); 
 	}
 	

@@ -17,7 +17,7 @@ public class MainClient {
 			String serverAddress = "//" + InetAddress.getLocalHost().getHostAddress() + ":1099/ServerForum";
 			//String serverAddress = "//192.168.137.1:1099/ServerForum";
 			IServerForum chatServer = (IServerForum) Naming.lookup(serverAddress);
-			System.out.println("Connexion OK");
+			System.out.println( new Object(){}.getClass().getEnclosingClass().getName() + ": <OK> Connection with " + serverAddress );
 			new MainWindowClient(chatServer);
 		}
 		catch (UnknownHostException e){

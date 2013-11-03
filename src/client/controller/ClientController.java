@@ -66,6 +66,11 @@ public class ClientController implements IClientController {
 	public void pleaseRemoveLogin(String login) throws RemoteException {
 		chatServer.removeLogin(login);
 	}
+	
+	@Override
+	public void pleaseRemoveSubject( IClient client, String title ) throws RemoteException {
+		chatServer.removeSubjectDiscussion(title); 
+	}
 
 	@Override
 	public boolean verifyAvailableTitle(String title) throws RemoteException {
@@ -76,7 +81,7 @@ public class ClientController implements IClientController {
 	public void addSubjectDiscussion(String title) throws RemoteException {
 		chatServer.addSubjectDiscussion(title);
 	}
-
+	
 	@Override
 	public void recuperateSubjects() throws RemoteException {
 		mainWindowClient.getListButton().removeAll();

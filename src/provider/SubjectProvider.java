@@ -7,6 +7,9 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import server.IServerForum;
 import server.ISubjectDiscussion;
@@ -56,8 +59,28 @@ public class SubjectProvider extends UnicastRemoteObject implements ISubjectProv
 	}
 
 	@Override
-	public void broadcast(String msg) throws RemoteException {
+	public boolean broadcast(String msg) throws RemoteException {
 		this.subject.broadcast(msg);
+		return true; 
+	}
+
+	@Override
+	public boolean prepareDeletion() throws RemoteException { 
+		boolean bDeletionReady = false; 
+		
+		// warn every participant about the situation 
+		if ( 
+			this.broadcast( "[" + new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date()) + "] - Tous les participants de " + 
+				this.subject.getTitle() + " vont être désinscrits. Vos prochains messages dans ce sujet seront ignorés. \n" 
+			) 
+		) {
+			// unsubscribe everyone before deletion 
+			if ( this.subject.unsubscribeAll() ) {
+				bDeletionReady = true; // no more steps before deletion 
+			}
+		}
+		
+		return bDeletionReady; 
 	}
 
 }
