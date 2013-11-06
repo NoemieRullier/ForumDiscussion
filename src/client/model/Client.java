@@ -68,8 +68,8 @@ public class Client extends UnicastRemoteObject implements IClient {
 
 
 	@Override
-	public void recuperateSubjects() throws RemoteException {
-		controller.recuperateSubjects();
+	public void refreshSubjects() throws RemoteException {
+		controller.refreshSubjects();
 	}
 	
 }

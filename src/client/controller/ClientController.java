@@ -83,7 +83,7 @@ public class ClientController implements IClientController {
 	}
 	
 	@Override
-	public void recuperateSubjects() throws RemoteException {
+	public void refreshSubjects() throws RemoteException {
 		mainWindowClient.getListButton().removeAll();
 		mainWindowClient.validate();
 		mainWindowClient.repaint();

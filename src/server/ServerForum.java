@@ -61,7 +61,7 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 			ISubjectProvider subj = new SubjectProvider(title);
 			this.listProvider.put(title, subj);
 			for (IClient client : pseudosUsed.values()){
-				client.recuperateSubjects();
+				client.refreshSubjects();
 			}
 		}
 		return bFree;
@@ -73,6 +73,9 @@ public class ServerForum extends UnicastRemoteObject implements IServerForum {
 		if ( this.listProvider.get( title ).prepareDeletion() ) {
 			if ( this.listProvider.remove( title ) != null ) {
 				bRemoved = true; 
+				for (IClient client : pseudosUsed.values()){
+					client.refreshSubjects();
+				}
 			}
 		}
 		return bRemoved; 

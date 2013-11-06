@@ -80,10 +80,10 @@ public interface IClientController{
 	public void addSubjectDiscussion(String title) throws RemoteException;
 	
 	/**
-	 * Recuperate all new subjects
+	 * Refresh subject list  
 	 * @throws RemoteException
 	 */
-	public void recuperateSubjects() throws RemoteException;
+	public void refreshSubjects() throws RemoteException;
 
 	
 	

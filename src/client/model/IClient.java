@@ -63,9 +63,9 @@ public interface IClient  extends Remote {
 	public boolean equals( IClient client ) throws RemoteException;
 	
 	/**
-	 * Recuperate all subjects
+	 * Refresh subject list 
 	 * @throws RemoteException
 	 */
-	public void recuperateSubjects() throws RemoteException;
+	public void refreshSubjects() throws RemoteException;
 	
 }
