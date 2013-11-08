@@ -59,6 +59,7 @@ public class MainWindowClient extends JFrame {
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JButton addSubjectbutton = new JButton("Nouveau sujet");
 	private JPanel listButton = new JPanel();
+	private ImageIcon iconTrash = new ImageIcon("img/trash_32.png");
 
 	public MainWindowClient(IServerForum chatServer) throws RemoteException {
 		this.chatServer = chatServer;
@@ -255,7 +256,7 @@ public class MainWindowClient extends JFrame {
 			for (String s : subjects){
 				System.out.println(  this.getClass().getName() + ": \t - " + s ); 
 				buttonSubject = new JButton(s);
-				buttonRemoveSubject = new JButton( "X" ); 
+				buttonRemoveSubject = new JButton(iconTrash); 
 				buttonSubject.addActionListener(new ButtonSubscribeListener(s)); 
 				buttonRemoveSubject.addActionListener( new ButtonRemoveSubjectListener( s ) ); 
 				listButton.add(buttonSubject);
