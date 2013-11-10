@@ -4,6 +4,7 @@
 package client.view;
 
 //import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -20,6 +21,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -27,11 +29,11 @@ import javax.swing.SwingConstants;
 
 import provider.ISubjectProvider;
 import server.IServerForum;
-//import server.ISubjectDiscussion;
 import client.controller.ClientController;
 import client.controller.IClientController;
 import client.model.Client;
 import client.model.IClient;
+
 
 
 /**
@@ -58,7 +60,7 @@ public class MainWindowClient extends JFrame {
 	private IServerForum chatServer;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JButton addSubjectbutton = new JButton("Nouveau sujet");
-	private JPanel listButton = new JPanel();
+	private JPanel listButton = new JPanel(new GridBagLayout());
 	private ImageIcon iconTrash = new ImageIcon("img/trash_32.png");
 
 	public MainWindowClient(IServerForum chatServer) throws RemoteException {
@@ -71,15 +73,28 @@ public class MainWindowClient extends JFrame {
 		chatServer.addClient(this.pseudo, this.client);
 		
 		panel.setLayout(new GridBagLayout());
-		/* Menu */
+		/* Title Menu */
+		JLabel titleMenu = new JLabel("Menu: ");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
 		gbc.gridheight = 1; // One cell in height
 		gbc.weightx = 1;
 		gbc.weighty = 0;
-		gbc.fill = GridBagConstraints.NONE;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.CENTER; // Position
+		gbc.insets = new Insets(10, 10, 5, 10);
+		panel.add(titleMenu,gbc);
+		
+		/* Menu */
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+		gbc.gridheight = 1; // One cell in height
+		gbc.weightx = 1;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.WEST; // Position
 		gbc.insets = new Insets(10, 10, 5, 10);
 		addSubjectbutton.addActionListener(new NewSubjectListener(this));
 		panel.add(addSubjectbutton,gbc);
@@ -87,7 +102,7 @@ public class MainWindowClient extends JFrame {
 		/* Line */
 		JSeparator line = new JSeparator(SwingConstants.HORIZONTAL);
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
 		gbc.gridheight = 1; // One cell in height
 		gbc.weightx = 1;
@@ -97,14 +112,29 @@ public class MainWindowClient extends JFrame {
 		gbc.insets = new Insets(10, 10, 5, 10);
 		panel.add(line,gbc);
 		
+		/* Title */
+		JLabel title = new JLabel("List of subjects: ");
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+		gbc.gridheight = 1; // One cell in height
+		gbc.weightx = 1;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.CENTER; // Position
+		gbc.insets = new Insets(10, 10, 5, 10);
+		panel.add(title,gbc);
+		
 		/* List of subjects */
 		getAllSubjects();
 
 		this.setTitle( "Bienvenue " + pseudo);
+		this.setSize(700, 300);
+		this.setLocationRelativeTo(null);
+		this.setResizable(true);
 		this.setContentPane(panel);
-		this.setIconImage(iconWindow.getImage());
 		this.setVisible(true);
-		this.setSize(900, 800);
+		this.setIconImage(iconWindow.getImage());
 		this.addWindowListener( new MainWindowAdapter() );
 	}
 
@@ -250,29 +280,49 @@ public class MainWindowClient extends JFrame {
 			subjects = chatServer.sendSubjects();
 			int nbSubjects = subjects.size();
 			int nbSubjectsByLine = 5;
-			listButton.setLayout(new GridLayout(nbSubjects/nbSubjectsByLine+1,nbSubjectsByLine));
-//			listButton.setBackground(new Color(240, 109, 158));
+			GridLayout gl = new GridLayout(nbSubjects/nbSubjectsByLine+1,nbSubjectsByLine); // row, column
+			gl.setHgap(10);
+			listButton.setLayout(gl);
 			System.out.println( this.getClass().getName() + ": Il y a actuellement " + nbSubjects + " sujets: "); 
 			for (String s : subjects){
-				System.out.println(  this.getClass().getName() + ": \t - " + s ); 
+				System.out.println(  this.getClass().getName() + ": \t - " + s );
+				JPanel panelAssociate = new JPanel(new GridBagLayout());
+				GridBagConstraints gbc2 = new GridBagConstraints();
 				buttonSubject = new JButton(s);
-				buttonRemoveSubject = new JButton(iconTrash); 
-				buttonSubject.addActionListener(new ButtonSubscribeListener(s)); 
-				buttonRemoveSubject.addActionListener( new ButtonRemoveSubjectListener( s ) ); 
-				listButton.add(buttonSubject);
-				listButton.add(buttonRemoveSubject);
+				buttonSubject.addActionListener(new ButtonSubscribeListener(s));
+				gbc2.gridx = 0;
+				gbc2.gridy = 0;
+				gbc2.gridwidth = GridBagConstraints.RELATIVE; // Single component so he is the last
+				gbc2.gridheight = 1; // One cell in height
+				gbc2.weightx = 1;
+				gbc2.weighty = 0;
+				gbc2.fill = GridBagConstraints.BOTH;
+				gbc2.anchor = GridBagConstraints.CENTER; // Position
+				panelAssociate.add(buttonSubject,gbc2);
+				buttonRemoveSubject = new JButton(iconTrash);
+				buttonRemoveSubject.addActionListener( new ButtonRemoveSubjectListener( s ) );
+				gbc2.gridx = 1;
+				gbc2.gridy = 0;
+				gbc2.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
+				gbc2.gridheight = 1; // One cell in height
+				gbc2.weightx = 0;
+				gbc2.weighty = 0;
+				gbc2.fill = GridBagConstraints.NONE;
+				gbc2.anchor = GridBagConstraints.CENTER; // Position
+				panelAssociate.add(buttonRemoveSubject,gbc2	);
+				listButton.add(panelAssociate);
 				listButtonSubject.add(buttonSubject);
 				listButtonSubject.add(buttonRemoveSubject);
 			}
 			gbc.gridx = 0;
-			gbc.gridy = 2;
+			gbc.gridy = 4;
 			gbc.gridwidth = GridBagConstraints.REMAINDER; // Single component so he is the last
 			gbc.gridheight = 1; // One cell in height
 			gbc.weightx = 1;
 			gbc.weighty = 0;
 			gbc.fill = GridBagConstraints.BOTH;
 			gbc.anchor = GridBagConstraints.CENTER; // Position
-			gbc.insets = new Insets(10, 10, 5, 10);
+			gbc.insets = new Insets(10, 10, 10, 10);
 			panel.add(listButton,gbc);
 		} catch (RemoteException e) {
 			e.printStackTrace();
